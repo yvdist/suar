@@ -1,0 +1,455 @@
+================================================================
+SUAR — RENCANA PROJECT
+Direktori layanan mental health terjangkau
+================================================================
+Diperbarui: 21 Agustus 2026
+Catatan: sesi incognito — file ini satu-satunya arsip.
+Simpan sebelum menutup tab.
+
+Isi:
+  BAGIAN 1  Identitas & branding
+  BAGIAN 2  Arah desain
+  BAGIAN 3  Tech stack
+  BAGIAN 4  Scope & data
+  BAGIAN 5  Etika & pengaman
+  BAGIAN 6  Rencana project berikutnya
+  BAGIAN 7  Prinsip umum
+  BAGIAN 8  Yang belum diputuskan
+
+
+================================================================
+BAGIAN 1 — IDENTITAS & BRANDING
+================================================================
+
+NAMA: SUAR
+Status: DIKUNCI
+
+Arti: api atau lampu penanda untuk kapal yang mencari jalan
+masuk pelabuhan. Alat navigasi, bukan metafora perasaan.
+
+--- KENAPA SUAR ---
+
+* Berasal dari kosakata navigasi/infrastruktur, bukan kosakata
+  perasaan. Nama dari "sumur" perasaan (Teduh, Rehat, Jeda,
+  Pulih, Lega) memaksa pengunjung mengakui sesuatu tentang
+  dirinya sebelum sempat klik. Nama navigasi tidak menuntut
+  pengakuan apa pun.
+
+* Tidak ada layanan, yayasan, direktori, atau aplikasi kesehatan
+  mental di Indonesia dengan nama ini. Sudah dicek.
+
+* Pendek, tegas, mudah diingat, tidak mungkin tertukar dengan
+  nama kafe atau akun mindfulness.
+
+* Nyambung langsung dengan sistem visual wayfinding.
+
+--- HASIL PENGECEKAN TABRAKAN ---
+
+BERSIH di kategori kesehatan mental. Tidak ada pesaing langsung.
+
+Tabrakan di kategori lain (semuanya dinilai tidak fatal):
+  - suar.id  -> dipegang Grid Network (Kompas Gramedia),
+                portal konten viral/jadwal kereta
+  - Suar Coffee and Roastery, Pekanbaru (@suarcoffee di IG)
+  - SUAR, tool AI resume di suardot.com
+  - "suar wood" = nama dagang kayu trembesi
+
+Alasan tidak fatal: SEO direktori tidak bergantung pada nama
+brand. Yang harus dimenangkan adalah kata kunci layanan
+("psikolog murah Bandung", "konseling gratis mahasiswa",
+"psikiater BPJS") — dan di situ tidak ada satu pun dari mereka
+yang bersaing.
+
+--- TO-DO DOMAIN & HANDLE ---
+
+[ ] Ambil suar.app (suar.id sudah hilang)
+[ ] Cek handle IG — @suarcoffee terpakai, cari varian
+    (@suar.app / @pakaisuar / dll)
+[ ] Cek merek di PDKI DJKI, kelas 42 dan 44
+
+--- TAGLINE ---
+
+"Cari bantuan yang bisa kamu jangkau."
+
+Prinsipnya: jangan menjanjikan hasil, jangan menyiratkan bahwa
+membuka situs ini berarti kamu sedang parah.
+
+--- LOGO ---
+
+Pendekatan: WORDMARK SAJA + mark kecil untuk favicon.
+Wordmark yang diset baik hampir selalu terlihat lebih dewasa
+daripada ikon abstrak buatan cepat.
+
+HINDARI TOTAL: otak, bohlam, hati, teratai, dua tangan
+bersalaman, orang memeluk lutut. Semua itu penanda kategori
+yang bikin produk kelihatan seperti brosur puskesmas.
+
+Kalau butuh mark: bentuk kanopi/peneduh atau nyala suar yang
+disederhanakan jadi satu garis. Monoline, satu ketebalan,
+tetap terbaca di 16px.
+
+
+================================================================
+BAGIAN 2 — ARAH DESAIN
+================================================================
+
+KONSEP: SISTEM WAYFINDING, BUKAN LANDING PAGE.
+
+Ini bukan produk SaaS, ini infrastruktur informasi publik —
+fungsinya sama seperti papan petunjuk di stasiun. Kosakata
+visualnya: hierarki tegas, label jelas, keterbacaan tinggi,
+warna berfungsi bukan menghias, target sentuh besar.
+
+Ketenangan datang dari kejelasan, bukan dari pastel dan sudut
+membulat.
+
+--- PALET ---
+
+Peran          Hex        Catatan
+-----------    -------    --------------------------------------
+Naungan        #EFF2EF    base; pale hijau-abu, bayangan di
+                          dinding putih. BUKAN cream hangat.
+Permukaan      #FFFFFF    hanya untuk baris entri, dipakai hemat
+Tinta          #1C2420    hitam kehijauan, jangan #000
+Redup          #5F6B64    teks sekunder, tanggal
+Aksen          #1F5148    teal-hijau dalam; aksi + status
+                          terverifikasi
+Penanda gratis #8C6A16    oker teredam, khusus badge
+                          subsidi/gratis
+Perlu dicek    #8A4B3A    HANYA state fungsional, bukan warna
+                          brand
+
+Aturan: satu aksen, dipakai sedikit. Sisanya netral.
+Dark mode (opsional): gelapnya kehijauan #141A17, bukan slate.
+
+PENTING — kenapa basisnya dingin, bukan cream:
+"Teduh" secara harfiah berarti naungan, dan naungan itu berwarna
+dingin. Selain itu, kombinasi cream hangat + serif kontras
+tinggi + aksen terakota sekarang sudah jadi penanda desain
+AI-generated. Sengaja dihindari.
+
+--- TIPOGRAFI ---
+
+Display   : Bricolage Grotesque
+            variabel, punya sedikit ketidaksempurnaan yang bikin
+            terasa dibuat orang, belum jenuh
+
+Body      : Public Sans
+            typeface yang memang dirancang untuk informasi
+            layanan publik — pilihannya punya alasan, bukan
+            selera
+
+Data      : IBM Plex Mono, ukuran kecil
+            tanggal verifikasi, harga, jarak
+
+--- ELEMEN TANDA TANGAN: STEMPEL VERIFIKASI ---
+
+Sinyal kepercayaan paling penting di produk ini adalah "kapan
+terakhir dicek". Jadikan itu elemen visual yang paling diingat.
+
+Spesifikasi:
+  - Diset mono, huruf kecil, letter-spacing sedikit longgar
+  - Ada di SETIAP entri
+  - Diletakkan di BAWAH garis pemisah, bukan di header —
+    posisinya menandakan ini catatan kaki jujur, bukan label
+    promosi
+  - Tiga state terbaca sekilas:
+      titik #1F5148  -> baru dicek
+      titik #8C6A16  -> mulai lama
+      titik #8A4B3A  -> perlu dicek ulang (teks ikut berubah
+                        warna)
+  - Entri kedaluwarsa TIDAK disembunyikan dan TIDAK dihapus.
+    Ditandai, supaya pengguna tahu perlu konfirmasi ulang.
+
+--- LAYOUT ---
+
+[ ] Daftar, BUKAN grid kartu
+[ ] Rata kiri, jangan semuanya di tengah
+[ ] Pembatas garis rambut, bukan kartu melayang dengan shadow
+[ ] Filter: sidebar menetap di desktop, bottom sheet di mobile
+[ ] Kepadatan yang pas — direktori untuk dipindai, whitespace
+    berlebihan justru kurang sopan
+[ ] Animasi hampir nol
+
+--- YANG DIHINDARI ---
+
+gradient hero, glassmorphism, kartu melayang dengan shadow
+berat, ikon emoji, tombol "Get Started", sudut membulat di
+mana-mana, dark mode toggle sebagai fitur, kombinasi
+Next+shadcn+Inter default.
+
+
+================================================================
+BAGIAN 3 — TECH STACK
+================================================================
+
+INTI: Astro 5 (BUKAN Next.js)
+
+Alasan: konten statis, tidak butuh SSR, JavaScript mendekati
+nol — penting karena sebagian pengguna ada di HP murah dan
+koneksi seadanya. Bonus: kombinasi Next+shadcn+Inter itu sendiri
+sudah jadi tanda visual yang ingin dihindari.
+
+--- KOMPONEN ---
+
+[ ] Content Collections + Zod
+    Skema bisa MEMAKSA setiap entri punya last_verified dan
+    verified_by. Build gagal kalau kosong. Aturan etis
+    ditegakkan oleh tipe, bukan oleh niat baik.
+
+[ ] Tailwind v4 dengan @theme custom
+    Buang seluruh palet dan type scale bawaan, ganti dengan
+    token di Bagian 2. Yang membedakan hasil dari tampilan
+    generik bukan Tailwind-nya, tapi apakah token-nya
+    ditentukan sendiri.
+
+[ ] Preact island HANYA untuk komponen filter
+    Sisanya HTML statis, tetap bisa dijelajahi tanpa JS.
+
+[ ] Font di-host sendiri via Fontsource
+    JANGAN tarik dari Google Fonts CDN. Bukan soal performa:
+    orang yang mencari layanan kesehatan mental tidak
+    seharusnya IP-nya terkirim ke pihak ketiga hanya karena
+    membuka halamanmu.
+
+[ ] Tanpa analytics
+    Atau kalau perlu, Umami self-hosted tanpa cookie.
+    Alasan sama.
+
+[ ] Cloudflare Pages untuk hosting
+    Gratis, cepat dari Indonesia.
+
+[ ] Pipeline data TERPISAH
+    Script Node/Python yang menghasilkan JSON, di-commit
+    manual. Riwayat Git jadi jejak audit verifikasi. Ini juga
+    jalan masuk ke scraping otomatis nanti tanpa mengubah
+    situsnya.
+
+--- CATATAN ---
+
+Untuk 50 entri, pencarian cukup filter() biasa.
+Fuse.js baru masuk kalau sudah ratusan.
+Pencarian geospasial ditunda ke versi berikutnya.
+
+
+================================================================
+BAGIAN 4 — SCOPE & DATA
+================================================================
+
+TARGET WAKTU: ~2 minggu
+
+--- VERSI PERTAMA ---
+
+[ ] Satu kota dulu (kemungkinan besar kota sendiri)
+[ ] 30-50 entri, diverifikasi manual satu per satu
+[ ] Filter berdasarkan harga dan jenis layanan
+[ ] Penanda khusus: mana yang gratis / bersubsidi
+[ ] Data statis di JSON — belum perlu backend rumit
+[ ] Tanpa akun, tanpa login
+
+--- SETELAH JALAN ---
+
+[ ] Scraping otomatis
+[ ] Tambah kota lain
+[ ] Pencarian geospasial ("terdekat dari saya")
+
+--- SUMBER DATA YANG PERLU DISISIR ---
+
+* Konseling kampus (banyak yang terbuka untuk umum)
+* Puskesmas yang punya psikolog
+* Layanan sliding-scale / bayar sesuai kemampuan
+* Platform konseling online
+* Klinik dan RS yang menerima BPJS
+* Komunitas dan yayasan non-profit
+
+--- FIELD PER ENTRI (draft skema) ---
+
+nama
+jenis_layanan      (psikolog / psikiater / konseling / komunitas)
+lokasi             (kota, kecamatan)
+alamat
+kontak
+harga              (angka; 0 untuk gratis)
+skema_biaya        (gratis / bpjs / sliding-scale / tarif tetap)
+online             (boolean)
+perlu_rujukan      (boolean)
+perlu_janji        (boolean)
+jam_layanan
+last_verified      WAJIB
+verified_by        WAJIB
+catatan
+
+
+================================================================
+BAGIAN 5 — ETIKA & PENGAMAN
+================================================================
+
+--- AKURASI DATA: KONSEKUENSINYA NYATA ---
+
+Kalau ada orang yang sedang di titik terendah, sudah
+mengumpulkan keberanian untuk mencari bantuan, lalu nomor yang
+ditampilkan sudah mati atau harganya salah — itu bukan sekadar
+bug. Itu bisa jadi alasan dia berhenti mencoba.
+
+[ ] Verifikasi manual SETIAP entri sebelum publish
+[ ] Cantumkan tanggal terakhir dicek di setiap entri
+[ ] Sediakan tombol lapor kalau info sudah tidak valid
+[ ] Jadwalkan re-verifikasi berkala
+[ ] Entri kedaluwarsa ditandai, bukan disembunyikan
+
+--- WAJIB ADA SEBELUM PUBLISH ---
+
+[ ] Disclaimer jelas: ini direktori informasi, BUKAN layanan
+    darurat dan bukan pengganti penanganan profesional
+[ ] Jalur ke bantuan darurat yang mudah ditemukan di SETIAP
+    halaman
+[ ] Batasan eksplisit soal apa yang platform ini lakukan dan
+    tidak lakukan
+[ ] Kebijakan privasi yang jujur: tidak ada pelacakan, tidak
+    ada akun, tidak ada data yang dikumpulkan
+
+
+================================================================
+BAGIAN 6 — RENCANA PROJECT BERIKUTNYA
+================================================================
+
+>>> PEMANASAN (opsional, 2-3 hari) — TINY WINS TRACKER <<<
+
+Mencatat hal terkecil: mandi, makan, keluar kamar, balas chat.
+Mirip behavioral activation.
+
+Jujur: secara teknis ini CRUD app dengan checkbox. Portfolio-wise
+tipis. TAPI tujuannya bukan portfolio — tujuannya memastikan
+masih bisa menyelesaikan sesuatu, untuk dipakai sendiri. Rasa
+"gue kelarin sesuatu" itu bahan bakar sebelum project dua minggu.
+
+CATATAN: ide "journal local-first" dan "tiny wins tracker"
+sebenarnya aplikasi yang sama. Digabung.
+
+---
+
+>>> PROJECT KEDUA — TOOLKIT CBT/DBT TERSTRUKTUR <<<
+    DIREKOMENDASIKAN
+
+Isinya: thought record, cognitive distortion checker,
+behavioral activation scheduler, worry postponement.
+Semuanya teknik dengan dasar riset, bukan self-help karangan.
+
+Kompleksitas ada di logic — memetakan pikiran ke jenis distorsi,
+memandu reframing bertahap, menjadwalkan aktivitas berdasarkan
+capaian sebelumnya. Bukan CRUD sama sekali.
+
+Pasangan bagus untuk Suar: direktori untuk mencari bantuan
+profesional, toolkit untuk sementara waktu.
+
+Referensi struktur:
+  - "Feeling Good" — David Burns
+  - Materi MoodGYM
+
+Peringatan sama: harus jelas ini alat bantu, BUKAN pengganti
+terapi. Harus ada jalur keluar untuk yang sedang berat.
+
+---
+
+>>> ALTERNATIF KALAU BUTUH JEDA — PERSONAL DATA WAREHOUSE <<<
+
+Tarik data harian (screen time, riwayat lokasi, aktivitas Git,
+log Spotify, kalender) ke database lokal, bangun dashboard.
+Teknis: ETL, format berbeda-beda, time-series, agregasi.
+
+HATI-HATI: kalau mulai mengorelasikan "mood vs jam tidur vs
+jumlah commit" setiap hari, itu bentuk lain dari memikirkan diri
+sendiri terus-menerus. Bagus dilihat bulanan, buruk dipelototi
+harian.
+
+Ambil ini kalau setelah Suar selesai ternyata butuh project yang
+netral secara emosional.
+
+---
+
+>>> PELENGKAP — PETA RUTE MENCARI BANTUAN <<<
+
+Bukan direktori, tapi penjelasan alurnya: beda psikolog dan
+psikiater, apa yang terjadi di sesi pertama, BPJS menutup apa
+saja, kisaran biaya, boleh tidak berhenti kalau tidak cocok.
+
+Konten-berat, kode-ringan. Suar menjawab "ke mana", ini menjawab
+"bagaimana caranya dan apa yang akan terjadi".
+Bisa digabung sebagai satu section di dalam Suar.
+
+---
+
+>>> DITUNDA — ARSIP CERITA DENGAN MODERASI <<<
+
+Orang menuliskan pengalaman melewati fase tertentu — sesudahnya,
+bukan sedang di tengahnya.
+
+Kenapa ditunda: tanggung jawabnya paling berat. Platform tempat
+orang bercerita soal masa sulit bisa berubah jadi tempat yang
+memperburuk keadaan kalau moderasinya tidak ketat. Moderasi 24/7
+sendirian itu berat — teknis maupun emosional, karena kamu yang
+akan membaca semuanya.
+
+Idenya bagus. Simpan sampai ada tim.
+
+---
+
+>>> CADANGAN — AMBIENT CO-PRESENCE <<<
+
+"Ada orang lain yang sedang online juga" tanpa harus mengobrol.
+Teknis: WebSocket, presence system, state realtime.
+Loneliness-adjacent tapi tidak menuntut interaksi sosial.
+
+
+================================================================
+BAGIAN 7 — PRINSIP UMUM
+================================================================
+
+1. SCOPE KECIL. 2-4 hari untuk project kecil, maksimal 2 minggu
+   untuk yang besar. Saat energi naik-turun, project ambisius
+   yang mangkrak hanya menambah satu daftar rasa gagal lagi.
+
+2. PIKIRKAN KONDISI TERBURUK PENGGUNA SEJAK AWAL. Apa yang
+   terjadi kalau ada user yang sedang benar-benar krisis?
+   Bagian ini yang membuat portfolio terlihat matang —
+   menunjukkan kamu memikirkan konsekuensi, bukan hanya fitur.
+
+3. PERHATIKAN ARAHNYA. Membangun produk soal mental health saat
+   sedang mengalaminya bisa jalan dua arah: terapeutik, atau
+   rumination yang dibungkus produktivitas. Kalau mulai terasa
+   ke arah kedua, ambil project netral tanpa merasa gagal.
+
+4. JANGAN TERJEBAK DI FASE PERSIAPAN. Nama sudah dikunci, palet
+   sudah ada, stack sudah dipilih. Deliberasi lebih lanjut soal
+   estetika adalah bentuk penundaan. Mulai menulis kode.
+
+
+================================================================
+BAGIAN 8 — YANG BELUM DIPUTUSKAN
+================================================================
+
+[ ] Kota mana untuk versi pertama
+[ ] Ketersediaan suar.app (belum diverifikasi)
+[ ] Status merek di PDKI (belum dicek)
+[ ] Handle Instagram final
+[ ] Apakah "Peta rute mencari bantuan" masuk v1 atau nanti
+[ ] Task list konkret untuk Cursor — BELUM DIBUAT, ini langkah
+    berikutnya
+
+
+================================================================
+CATATAN PENUTUP
+================================================================
+
+Soal belum siap ke profesional — itu masuk akal dan tidak perlu
+dipaksa hari ini.
+
+Satu hal saja: rasa takutnya biasanya jauh lebih besar dari
+kenyataannya, dan pintu masuknya tidak harus langsung psikiater.
+Kalau nanti mau, opsi dengan tekanan paling rendah bisa dicari
+duluan — tanpa komitmen apa pun.
+
+Riset untuk Suar kebetulan akan membawa kamu melewati semua
+informasi itu. Manfaatkan.
+
+================================================================
