@@ -1,0 +1,20 @@
+{
+  "name": "Puskesmas Uji Coba",
+  "type": "counseling",
+  "city": "Bandung",
+  "district": "Uji Coba",
+  "address": "Jalan Uji Coba No. 2 (alamat fiktif untuk pengembangan)",
+  "phone": "0800-000-0002",
+  "whatsapp": "0800-000-0002",
+  "price_min": 0,
+  "pricing": "free",
+  "online": false,
+  "in_person": true,
+  "needs_referral": false,
+  "needs_appointment": true,
+  "hours": "Senin–Jumat 08.00–14.00",
+  "notes": "Entri contoh fiktif untuk pengembangan, bukan layanan nyata.",
+  "last_verified": "2026-07-01",
+  "verified_by": "suar-team",
+  "source": "Data contoh internal untuk pengembangan"
+}
