@@ -11,6 +11,7 @@ import {
   tautanPeta,
   kalimatCaraDatang,
   deskripsiSingkat,
+  tautanLapor,
 } from "../../lib/kontak";
 
 export const getStaticPaths = (async () => {
@@ -98,6 +99,15 @@ const judulBagian =
       )}
     </section>
 
+    {data.status === "tutup" && (
+      <div class="rounded-[8px] border border-garis bg-gratis-bg p-[16px_18px]">
+        <p class="text-base font-normal leading-relaxed text-tinta">
+          Layanan ini tercatat sudah tutup. Informasinya tetap ditampilkan
+          supaya yang mencari nama ini tahu keadaannya.
+        </p>
+      </div>
+    )}
+
     {adaKontak && (
       <section aria-labelledby="bagian-kontak" class="space-y-2">
         <h2 id="bagian-kontak" class={judulBagian}>Kontak</h2>
@@ -176,7 +186,7 @@ const judulBagian =
       </p>
       <p>
         <a
-          href="/lapor"
+          href={tautanLapor(data.nama, entry.id)}
           class="inline-flex min-h-[44px] items-center gap-1 text-sm font-normal text-aksen underline underline-offset-4"
         >
           Ada yang tidak sesuai? Beri tahu kami <span aria-hidden="true">→</span>

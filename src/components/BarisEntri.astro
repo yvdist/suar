@@ -39,7 +39,9 @@ interface Badge {
 }
 
 const semuaBadge: Badge[] = [
-  { teks: labelSkema[data.skema_biaya] ?? data.skema_biaya, penting: true },
+  ...(data.status === "tutup"
+    ? [{ teks: "Sudah tutup", penting: true } as Badge]
+    : [{ teks: labelSkema[data.skema_biaya] ?? data.skema_biaya, penting: true } as Badge]),
   ...(!data.perlu_rujukan ? [{ teks: "Tanpa rujukan", penting: false } as Badge] : []),
   ...(data.online ? [{ teks: "Daring", penting: false } as Badge] : []),
 ];

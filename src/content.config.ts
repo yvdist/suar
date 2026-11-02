@@ -27,6 +27,7 @@ const layanan = defineCollection({
       perlu_janji: z.boolean(),
       jam_layanan: z.string().optional(),
       catatan: z.string().max(200).optional(),
+      status: z.enum(["aktif", "tutup"]).default("aktif"),
       last_verified: z.coerce.date().refine((d) => d.getTime() <= Date.now(), {
         message: "last_verified cannot be in the future",
       }),
