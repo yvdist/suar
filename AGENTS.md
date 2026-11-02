@@ -64,3 +64,4 @@ matter more than feature completeness.
   tokens to global.css`, `feat: add Base layout shell`,
   `feat: add dev-only token test page`.
 - Keep each commit buildable. Build must pass after every commit.
+- Execute all commits for a given phase autonomously in sequence without stopping or waiting for user confirmation between commits.
