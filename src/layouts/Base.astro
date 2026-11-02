@@ -1,0 +1,89 @@
+---
+import "@fontsource-variable/bricolage-grotesque";
+import "@fontsource-variable/public-sans";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description = "Cari bantuan yang bisa kamu jangkau." } = Astro.props;
+const pageTitle = title ? `${title} \u2014 suar` : "suar";
+---
+
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+  </head>
+  <body class="bg-naungan text-tinta font-body antialiased">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:inline-flex focus:min-h-[44px] focus:min-w-[44px] focus:items-center focus:bg-aksen focus:px-4 focus:py-3 focus:text-permukaan focus:text-sm focus:font-medium focus:outline-none focus:ring-2 focus:ring-tinta focus:ring-offset-2"
+    >
+      Lewati ke konten utama
+    </a>
+
+    <header class="border-b border-garis bg-naungan">
+      <div class="max-w-[720px] px-5 py-4">
+        <a
+          href="/"
+          class="font-display text-[20px] font-medium tracking-tight text-tinta no-underline"
+        >
+          suar
+        </a>
+      </div>
+    </header>
+
+    <aside
+      aria-label="Bantuan darurat"
+      class="border-y border-garis bg-aksen-bg"
+    >
+      <div class="max-w-[720px] px-5 py-3">
+        <p class="text-sm text-redup">
+          <!-- Slot bantuan darurat — isi menyusul di Fase 06 -->
+          Jalur bantuan darurat akan tampil di sini.
+        </p>
+      </div>
+    </aside>
+
+    <main
+      id="main"
+      tabindex="-1"
+      class="max-w-[720px] px-5 py-8 focus:outline-none"
+    >
+      <slot />
+    </main>
+
+    <footer class="border-t border-garis bg-naungan">
+      <div
+        class="max-w-[720px] flex flex-wrap gap-x-6 gap-y-2 px-5 py-6 text-sm"
+      >
+        <a
+          href="/batasan"
+          class="inline-flex min-h-[44px] items-center text-redup underline decoration-garis underline-offset-4 hover:text-tinta hover:decoration-tinta"
+        >
+          Batasan layanan
+        </a>
+        <a
+          href="/privasi"
+          class="inline-flex min-h-[44px] items-center text-redup underline decoration-garis underline-offset-4 hover:text-tinta hover:decoration-tinta"
+        >
+          Privasi
+        </a>
+        <a
+          href="/lapor"
+          class="inline-flex min-h-[44px] items-center text-redup underline decoration-garis underline-offset-4 hover:text-tinta hover:decoration-tinta"
+        >
+          Lapor perubahan
+        </a>
+      </div>
+    </footer>
+  </body>
+</html>
