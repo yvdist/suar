@@ -4,7 +4,7 @@ import "@fontsource-variable/public-sans";
 import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/500.css";
 import "../styles/global.css";
-import JalurDarurat from "../components/JalurDarurat.astro";
+import EmergencyStrip from "../components/EmergencyStrip.astro";
 
 interface Props {
   title?: string;
@@ -50,32 +50,32 @@ const pageTitle = title ? `${title} \u2014 suar` : "suar";
       <slot />
     </main>
 
-    <JalurDarurat />
+    <EmergencyStrip />
 
     <footer class="border-t border-line bg-shade">
       <div
         class="max-w-[720px] flex flex-wrap gap-x-6 gap-y-2 px-5 py-6 text-sm"
       >
         <a
-          href="/tentang"
+          href="/about"
           class="inline-flex min-h-[44px] items-center text-muted underline decoration-line underline-offset-4 hover:text-ink hover:decoration-ink"
         >
           Tentang
         </a>
         <a
-          href="/batasan"
+          href="/limitations"
           class="inline-flex min-h-[44px] items-center text-muted underline decoration-line underline-offset-4 hover:text-ink hover:decoration-ink"
         >
           Batasan layanan
         </a>
         <a
-          href="/privasi"
+          href="/privacy"
           class="inline-flex min-h-[44px] items-center text-muted underline decoration-line underline-offset-4 hover:text-ink hover:decoration-ink"
         >
           Privasi
         </a>
         <a
-          href="/lapor"
+          href="/report"
           class="inline-flex min-h-[44px] items-center text-muted underline decoration-line underline-offset-4 hover:text-ink hover:decoration-ink"
         >
           Lapor perubahan

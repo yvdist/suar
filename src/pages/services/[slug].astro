@@ -2,71 +2,71 @@
 import type { GetStaticPaths } from "astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 import Base from "../../layouts/Base.astro";
-import StempelVerifikasi from "../../components/StempelVerifikasi.astro";
-import { formatHarga } from "../../lib/harga";
+import VerificationStamp from "../../components/VerificationStamp.astro";
+import { formatPrice } from "../../lib/price";
 import {
-  tautanTelepon,
-  tautanWhatsapp,
-  tampilanSitus,
-  tautanPeta,
-  kalimatCaraDatang,
-  deskripsiSingkat,
-  tautanLapor,
-} from "../../lib/kontak";
+  phoneLink,
+  whatsappLink,
+  displaySite,
+  mapLink,
+  visitInfo,
+  shortDescription,
+  reportLink,
+} from "../../lib/contact";
 
 export const getStaticPaths = (async () => {
-  const semuaEntri = await getCollection("layanan");
-  return semuaEntri.map((entry) => ({
+  const allEntries = await getCollection("services");
+  return allEntries.map((entry) => ({
     params: { slug: entry.id },
     props: { entry },
   }));
 }) satisfies GetStaticPaths;
 
 interface Props {
-  entry: CollectionEntry<"layanan">;
+  entry: CollectionEntry<"services">;
 }
 
 const { entry } = Astro.props;
 const data = entry.data;
 
-const labelJenis: Record<string, string> = {
-  psikolog: "Psikolog",
-  psikiater: "Psikiater",
-  konseling: "Konseling",
-  komunitas: "Komunitas",
+const typeLabels: Record<string, string> = {
+  psychologist: "Psikolog",
+  psychiatrist: "Psikiater",
+  counseling: "Konseling",
+  community: "Komunitas",
   hotline: "Hotline",
 };
 
-const namaJenis = labelJenis[data.jenis] ?? data.jenis;
-const lokasi = [data.kota, data.kecamatan].filter(Boolean).join(", ");
-const subjudul = [namaJenis, lokasi].filter(Boolean).join(" · ");
-const harga = formatHarga(data);
+const typeName = typeLabels[data.type] ?? data.type;
+const location = [data.city, data.district].filter(Boolean).join(", ");
+const subheading = [typeName, location].filter(Boolean).join(" · ");
+const price = formatPrice(data);
 
-const judulHalaman = `${data.nama} — biaya dan cara mendaftar`;
+const pageTitle = `${data.name} — biaya dan cara mendaftar`;
 
-const labelSkema: Record<string, string> = {
-  gratis: "Gratis",
+const pricingLabels: Record<string, string> = {
+  free: "Gratis",
   bpjs: "Ditanggung BPJS",
   "sliding-scale": "Sliding scale",
-  "tarif-tetap": "Tarif tetap",
+  "fixed-rate": "Tarif tetap",
 };
 
-const kalimatDatang = kalimatCaraDatang(
+const visitSentences = visitInfo(
   data.online,
-  data.tatap_muka,
-  data.perlu_rujukan,
-  data.perlu_janji,
+  data.in_person,
+  data.needs_referral,
+  data.needs_appointment,
 );
 
-const adaKontak = Boolean(data.telepon ?? data.whatsapp ?? data.situs ?? data.instagram);
-const judulBagian =
+const hasContact = Boolean(data.phone ?? data.whatsapp ?? data.website ?? data.instagram);
+const sectionHeading =
   "font-data text-[11px] font-normal uppercase tracking-[0.08em] text-muted";
 ---
 
-<Base title={judulHalaman} description={deskripsiSingkat(data.nama, namaJenis, data.kota, harga)}>
+<Base title={pageTitle} description={shortDescription(data.name, typeName, data.city, price)}>
   <div class="space-y-6">
     <a
-      id="kembali"
+      id="back"
       href="/"
       class="inline-flex min-h-[44px] items-center gap-2 text-sm font-normal text-accent no-underline hover:underline hover:underline-offset-4"
     >
@@ -75,31 +75,31 @@ const judulBagian =
 
     <div class="space-y-2">
       <h1 class="font-display text-[32px] font-medium leading-tight text-ink">
-        {data.nama}
+        {data.name}
       </h1>
-      {subjudul && (
-        <p class="text-sm font-normal leading-relaxed text-muted">{subjudul}</p>
+      {subheading && (
+        <p class="text-sm font-normal leading-relaxed text-muted">{subheading}</p>
       )}
     </div>
 
-    <section aria-labelledby="bagian-biaya" class="space-y-2">
-      <h2 id="bagian-biaya" class={judulBagian}>Biaya</h2>
+    <section aria-labelledby="section-cost" class="space-y-2">
+      <h2 id="section-cost" class={sectionHeading}>Biaya</h2>
       <p class="text-base font-normal leading-relaxed text-ink">
-        {harga} · {labelSkema[data.skema_biaya] ?? data.skema_biaya}
+        {price} · {pricingLabels[data.pricing] ?? data.pricing}
       </p>
     </section>
 
-    <section aria-labelledby="bagian-cara" class="space-y-2">
-      <h2 id="bagian-cara" class={judulBagian}>Cara datang</h2>
-      {kalimatDatang.map((kalimat) => (
-        <p class="text-base font-normal leading-relaxed text-ink">{kalimat}</p>
+    <section aria-labelledby="section-visit" class="space-y-2">
+      <h2 id="section-visit" class={sectionHeading}>Cara datang</h2>
+      {visitSentences.map((sentence) => (
+        <p class="text-base font-normal leading-relaxed text-ink">{sentence}</p>
       ))}
-      {data.jam_layanan && (
-        <p class="text-base font-normal leading-relaxed text-ink">{data.jam_layanan}</p>
+      {data.hours && (
+        <p class="text-base font-normal leading-relaxed text-ink">{data.hours}</p>
       )}
     </section>
 
-    {data.status === "tutup" && (
+    {data.status === "closed" && (
       <div class="rounded-[8px] border border-line bg-free-bg p-[16px_18px]">
         <p class="text-base font-normal leading-relaxed text-ink">
           Layanan ini tercatat sudah tutup. Informasinya tetap ditampilkan
@@ -108,16 +108,16 @@ const judulBagian =
       </div>
     )}
 
-    {adaKontak && (
-      <section aria-labelledby="bagian-kontak" class="space-y-2">
-        <h2 id="bagian-kontak" class={judulBagian}>Kontak</h2>
+    {hasContact && (
+      <section aria-labelledby="section-contact" class="space-y-2">
+        <h2 id="section-contact" class={sectionHeading}>Kontak</h2>
         <dl class="space-y-2 text-base font-normal text-ink">
-          {data.telepon && (
+          {data.phone && (
             <div class="flex gap-4">
               <dt class="w-20 shrink-0 text-sm font-normal text-muted">Telepon</dt>
               <dd>
-                <a href={tautanTelepon(data.telepon)} class="text-accent underline underline-offset-4">
-                  {data.telepon}
+                <a href={phoneLink(data.phone)} class="text-accent underline underline-offset-4">
+                  {data.phone}
                 </a>
               </dd>
             </div>
@@ -126,22 +126,22 @@ const judulBagian =
             <div class="flex gap-4">
               <dt class="w-20 shrink-0 text-sm font-normal text-muted">WhatsApp</dt>
               <dd>
-                <a href={tautanWhatsapp(data.whatsapp)} class="text-accent underline underline-offset-4">
+                <a href={whatsappLink(data.whatsapp)} class="text-accent underline underline-offset-4">
                   {data.whatsapp}
                 </a>
               </dd>
             </div>
           )}
-          {data.situs && (
+          {data.website && (
             <div class="flex gap-4">
               <dt class="w-20 shrink-0 text-sm font-normal text-muted">Situs</dt>
               <dd>
                 <a
-                  href={data.situs}
+                  href={data.website}
                   rel="noopener"
                   class="break-all text-accent underline underline-offset-4"
                 >
-                  {tampilanSitus(data.situs)}
+                  {displaySite(data.website)}
                 </a>
               </dd>
             </div>
@@ -156,13 +156,13 @@ const judulBagian =
       </section>
     )}
 
-    {data.alamat && (
-      <section aria-labelledby="bagian-alamat" class="space-y-2">
-        <h2 id="bagian-alamat" class={judulBagian}>Alamat</h2>
-        <p class="text-base font-normal leading-relaxed text-ink">{data.alamat}</p>
+    {data.address && (
+      <section aria-labelledby="section-address" class="space-y-2">
+        <h2 id="section-address" class={sectionHeading}>Alamat</h2>
+        <p class="text-base font-normal leading-relaxed text-ink">{data.address}</p>
         <p>
           <a
-            href={tautanPeta(data.alamat, data.kota)}
+            href={mapLink(data.address, data.city)}
             rel="noopener"
             class="inline-flex min-h-[44px] items-center text-sm font-normal text-accent underline underline-offset-4"
           >
@@ -172,21 +172,21 @@ const judulBagian =
       </section>
     )}
 
-    {data.catatan && (
-      <section aria-labelledby="bagian-catatan" class="space-y-2">
-        <h2 id="bagian-catatan" class={judulBagian}>Catatan</h2>
-        <p class="text-base font-normal leading-relaxed text-ink">{data.catatan}</p>
+    {data.notes && (
+      <section aria-labelledby="section-notes" class="space-y-2">
+        <h2 id="section-notes" class={sectionHeading}>Catatan</h2>
+        <p class="text-base font-normal leading-relaxed text-ink">{data.notes}</p>
       </section>
     )}
 
     <footer class="space-y-3">
-      <StempelVerifikasi lastVerified={data.last_verified} />
+      <VerificationStamp lastVerified={data.last_verified} />
       <p class="font-data text-[11px] font-normal tracking-[0.03em] text-muted">
-        Sumber: {data.sumber}
+        Sumber: {data.source}
       </p>
       <p>
         <a
-          href={tautanLapor(data.nama, entry.id)}
+          href={reportLink(data.name, entry.id)}
           class="inline-flex min-h-[44px] items-center gap-1 text-sm font-normal text-accent underline underline-offset-4"
         >
           Ada yang tidak sesuai? Beri tahu kami <span aria-hidden="true">→</span>
@@ -197,12 +197,12 @@ const judulBagian =
 </Base>
 
 <script>
-  const kembali = document.getElementById("kembali");
-  if (kembali instanceof HTMLAnchorElement) {
-    kembali.addEventListener("click", (e) => {
+  const back = document.getElementById("back");
+  if (back instanceof HTMLAnchorElement) {
+    back.addEventListener("click", (e) => {
       try {
-        const perujuk = new URL(document.referrer);
-        if (perujuk.origin === window.location.origin) {
+        const referrer = new URL(document.referrer);
+        if (referrer.origin === window.location.origin) {
           e.preventDefault();
           window.history.back();
         }
