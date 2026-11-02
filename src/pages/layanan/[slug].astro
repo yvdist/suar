@@ -9,8 +9,9 @@ import {
   tautanWhatsapp,
   tampilanSitus,
   tautanPeta,
-  kalimatCaraDatang,
+  kalimatDatang,
   deskripsiSingkat,
+  tautanLapor,
 } from "../../lib/kontak";
 
 export const getStaticPaths = (async () => {
@@ -185,7 +186,7 @@ const judulBagian =
       </p>
       <p>
         <a
-          href="/lapor"
+          href={tautanLapor(data.nama, entry.id)}
           class="inline-flex min-h-[44px] items-center gap-1 text-sm font-normal text-aksen underline underline-offset-4"
         >
           Ada yang tidak sesuai? Beri tahu kami <span aria-hidden="true">→</span>

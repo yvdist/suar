@@ -60,3 +60,13 @@ export function deskripsiSingkat(
 ): string {
   return `${nama}, layanan ${jenis} di ${kota}. ${harga}.`;
 }
+
+const EMAIL_LAPOR = "contact@yvdist.com";
+
+export function tautanLapor(nama: string, slug: string): string {
+  const subjek = encodeURIComponent(`Koreksi data: ${nama}`);
+  const isi = encodeURIComponent(
+    `Layanan: ${nama} (${slug})\n\nYang perlu diperbaiki:\n\nKontak balik (opsional):\n`,
+  );
+  return `mailto:${EMAIL_LAPOR}?subject=${subjek}&body=${isi}`;
+}
