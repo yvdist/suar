@@ -44,6 +44,14 @@ matter more than feature completeness.
 - Descriptive and calm, not cheerleading
 - Name services the way people name them, not system terms
 
+## Code language
+
+- Code identifiers are English: file names, components, functions,
+  variables, CSS tokens, schema fields, enum values, URL slugs.
+- User-facing content stays Indonesian: UI copy, entry data, email and
+  CLI output, `lang="id"`. This is the code/content boundary —
+  identifiers English, content Indonesian.
+
 ## Git
 
 - Write everything in English: branch names, commit messages, PR titles.
