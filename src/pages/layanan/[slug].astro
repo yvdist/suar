@@ -60,7 +60,7 @@ const kalimatDatang = kalimatCaraDatang(
 
 const adaKontak = Boolean(data.telepon ?? data.whatsapp ?? data.situs ?? data.instagram);
 const judulBagian =
-  "font-data text-[11px] font-normal uppercase tracking-[0.08em] text-redup";
+  "font-data text-[11px] font-normal uppercase tracking-[0.08em] text-muted";
 ---
 
 <Base title={judulHalaman} description={deskripsiSingkat(data.nama, namaJenis, data.kota, harga)}>
@@ -68,23 +68,23 @@ const judulBagian =
     <a
       id="kembali"
       href="/"
-      class="inline-flex min-h-[44px] items-center gap-2 text-sm font-normal text-aksen no-underline hover:underline hover:underline-offset-4"
+      class="inline-flex min-h-[44px] items-center gap-2 text-sm font-normal text-accent no-underline hover:underline hover:underline-offset-4"
     >
       <span aria-hidden="true">←</span> Kembali ke daftar
     </a>
 
     <div class="space-y-2">
-      <h1 class="font-display text-[32px] font-medium leading-tight text-tinta">
+      <h1 class="font-display text-[32px] font-medium leading-tight text-ink">
         {data.nama}
       </h1>
       {subjudul && (
-        <p class="text-sm font-normal leading-relaxed text-redup">{subjudul}</p>
+        <p class="text-sm font-normal leading-relaxed text-muted">{subjudul}</p>
       )}
     </div>
 
     <section aria-labelledby="bagian-biaya" class="space-y-2">
       <h2 id="bagian-biaya" class={judulBagian}>Biaya</h2>
-      <p class="text-base font-normal leading-relaxed text-tinta">
+      <p class="text-base font-normal leading-relaxed text-ink">
         {harga} · {labelSkema[data.skema_biaya] ?? data.skema_biaya}
       </p>
     </section>
@@ -92,16 +92,16 @@ const judulBagian =
     <section aria-labelledby="bagian-cara" class="space-y-2">
       <h2 id="bagian-cara" class={judulBagian}>Cara datang</h2>
       {kalimatDatang.map((kalimat) => (
-        <p class="text-base font-normal leading-relaxed text-tinta">{kalimat}</p>
+        <p class="text-base font-normal leading-relaxed text-ink">{kalimat}</p>
       ))}
       {data.jam_layanan && (
-        <p class="text-base font-normal leading-relaxed text-tinta">{data.jam_layanan}</p>
+        <p class="text-base font-normal leading-relaxed text-ink">{data.jam_layanan}</p>
       )}
     </section>
 
     {data.status === "tutup" && (
-      <div class="rounded-[8px] border border-garis bg-gratis-bg p-[16px_18px]">
-        <p class="text-base font-normal leading-relaxed text-tinta">
+      <div class="rounded-[8px] border border-line bg-free-bg p-[16px_18px]">
+        <p class="text-base font-normal leading-relaxed text-ink">
           Layanan ini tercatat sudah tutup. Informasinya tetap ditampilkan
           supaya yang mencari nama ini tahu keadaannya.
         </p>
@@ -111,12 +111,12 @@ const judulBagian =
     {adaKontak && (
       <section aria-labelledby="bagian-kontak" class="space-y-2">
         <h2 id="bagian-kontak" class={judulBagian}>Kontak</h2>
-        <dl class="space-y-2 text-base font-normal text-tinta">
+        <dl class="space-y-2 text-base font-normal text-ink">
           {data.telepon && (
             <div class="flex gap-4">
-              <dt class="w-20 shrink-0 text-sm font-normal text-redup">Telepon</dt>
+              <dt class="w-20 shrink-0 text-sm font-normal text-muted">Telepon</dt>
               <dd>
-                <a href={tautanTelepon(data.telepon)} class="text-aksen underline underline-offset-4">
+                <a href={tautanTelepon(data.telepon)} class="text-accent underline underline-offset-4">
                   {data.telepon}
                 </a>
               </dd>
@@ -124,9 +124,9 @@ const judulBagian =
           )}
           {data.whatsapp && (
             <div class="flex gap-4">
-              <dt class="w-20 shrink-0 text-sm font-normal text-redup">WhatsApp</dt>
+              <dt class="w-20 shrink-0 text-sm font-normal text-muted">WhatsApp</dt>
               <dd>
-                <a href={tautanWhatsapp(data.whatsapp)} class="text-aksen underline underline-offset-4">
+                <a href={tautanWhatsapp(data.whatsapp)} class="text-accent underline underline-offset-4">
                   {data.whatsapp}
                 </a>
               </dd>
@@ -134,12 +134,12 @@ const judulBagian =
           )}
           {data.situs && (
             <div class="flex gap-4">
-              <dt class="w-20 shrink-0 text-sm font-normal text-redup">Situs</dt>
+              <dt class="w-20 shrink-0 text-sm font-normal text-muted">Situs</dt>
               <dd>
                 <a
                   href={data.situs}
                   rel="noopener"
-                  class="break-all text-aksen underline underline-offset-4"
+                  class="break-all text-accent underline underline-offset-4"
                 >
                   {tampilanSitus(data.situs)}
                 </a>
@@ -148,8 +148,8 @@ const judulBagian =
           )}
           {data.instagram && (
             <div class="flex gap-4">
-              <dt class="w-20 shrink-0 text-sm font-normal text-redup">Instagram</dt>
-              <dd class="text-tinta">@{data.instagram}</dd>
+              <dt class="w-20 shrink-0 text-sm font-normal text-muted">Instagram</dt>
+              <dd class="text-ink">@{data.instagram}</dd>
             </div>
           )}
         </dl>
@@ -159,12 +159,12 @@ const judulBagian =
     {data.alamat && (
       <section aria-labelledby="bagian-alamat" class="space-y-2">
         <h2 id="bagian-alamat" class={judulBagian}>Alamat</h2>
-        <p class="text-base font-normal leading-relaxed text-tinta">{data.alamat}</p>
+        <p class="text-base font-normal leading-relaxed text-ink">{data.alamat}</p>
         <p>
           <a
             href={tautanPeta(data.alamat, data.kota)}
             rel="noopener"
-            class="inline-flex min-h-[44px] items-center text-sm font-normal text-aksen underline underline-offset-4"
+            class="inline-flex min-h-[44px] items-center text-sm font-normal text-accent underline underline-offset-4"
           >
             Buka di peta
           </a>
@@ -175,19 +175,19 @@ const judulBagian =
     {data.catatan && (
       <section aria-labelledby="bagian-catatan" class="space-y-2">
         <h2 id="bagian-catatan" class={judulBagian}>Catatan</h2>
-        <p class="text-base font-normal leading-relaxed text-tinta">{data.catatan}</p>
+        <p class="text-base font-normal leading-relaxed text-ink">{data.catatan}</p>
       </section>
     )}
 
     <footer class="space-y-3">
       <StempelVerifikasi lastVerified={data.last_verified} />
-      <p class="font-data text-[11px] font-normal tracking-[0.03em] text-redup">
+      <p class="font-data text-[11px] font-normal tracking-[0.03em] text-muted">
         Sumber: {data.sumber}
       </p>
       <p>
         <a
           href={tautanLapor(data.nama, entry.id)}
-          class="inline-flex min-h-[44px] items-center gap-1 text-sm font-normal text-aksen underline underline-offset-4"
+          class="inline-flex min-h-[44px] items-center gap-1 text-sm font-normal text-accent underline underline-offset-4"
         >
           Ada yang tidak sesuai? Beri tahu kami <span aria-hidden="true">→</span>
         </a>

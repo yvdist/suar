@@ -6,63 +6,63 @@ if (!import.meta.env.DEV) {
 }
 
 const swatches = [
-  { name: "naungan", hex: "#EFF2EF", role: "latar halaman", textClass: "text-tinta", border: "border-garis" },
-  { name: "permukaan", hex: "#FFFFFF", role: "latar baris entri", textClass: "text-tinta", border: "border-garis" },
-  { name: "tinta", hex: "#1C2420", role: "judul, teks utama", textClass: "text-permukaan", border: "border-tinta" },
-  { name: "redup", hex: "#5F6B64", role: "teks sekunder, tanggal", textClass: "text-permukaan", border: "border-garis" },
-  { name: "aksen", hex: "#1F5148", role: "aksi, status terverifikasi", textClass: "text-permukaan", border: "border-garis" },
-  { name: "gratis", hex: "#8C6A16", role: "badge subsidi / gratis", textClass: "text-permukaan", border: "border-garis" },
-  { name: "usang", hex: "#8A4B3A", role: "state perlu dicek ulang", textClass: "text-permukaan", border: "border-garis" },
-  { name: "garis", hex: "#DDE3E0", role: "pembatas garis rambut", textClass: "text-tinta", border: "border-garis" },
-  { name: "gratis-bg", hex: "#F0E9D4", role: "latar badge gratis", textClass: "text-tinta", border: "border-garis" },
-  { name: "aksen-bg", hex: "#E3EAE7", role: "latar aksen", textClass: "text-tinta", border: "border-garis" },
+  { name: "shade", hex: "#EFF2EF", role: "latar halaman", textClass: "text-ink", border: "border-line" },
+  { name: "surface", hex: "#FFFFFF", role: "latar baris entri", textClass: "text-ink", border: "border-line" },
+  { name: "ink", hex: "#1C2420", role: "judul, teks utama", textClass: "text-surface", border: "border-ink" },
+  { name: "muted", hex: "#5F6B64", role: "teks sekunder, tanggal", textClass: "text-surface", border: "border-line" },
+  { name: "accent", hex: "#1F5148", role: "aksi, status terverifikasi", textClass: "text-surface", border: "border-line" },
+  { name: "free", hex: "#8C6A16", role: "badge subsidi / gratis", textClass: "text-surface", border: "border-line" },
+  { name: "stale", hex: "#8A4B3A", role: "state perlu dicek ulang", textClass: "text-surface", border: "border-line" },
+  { name: "line", hex: "#DDE3E0", role: "pembatas garis rambut", textClass: "text-ink", border: "border-line" },
+  { name: "free-bg", hex: "#F0E9D4", role: "latar badge gratis", textClass: "text-ink", border: "border-line" },
+  { name: "accent-bg", hex: "#E3EAE7", role: "latar aksen", textClass: "text-ink", border: "border-line" },
 ];
 
 const bgMap: Record<string, string> = {
-  naungan: "bg-naungan",
-  permukaan: "bg-permukaan",
-  tinta: "bg-tinta",
-  redup: "bg-redup",
-  aksen: "bg-aksen",
-  gratis: "bg-gratis",
-  usang: "bg-usang",
-  garis: "bg-garis",
-  "gratis-bg": "bg-gratis-bg",
-  "aksen-bg": "bg-aksen-bg",
+  shade: "bg-shade",
+  surface: "bg-surface",
+  ink: "bg-ink",
+  muted: "bg-muted",
+  aksen: "bg-accent",
+  gratis: "bg-free",
+  usang: "bg-stale",
+  garis: "bg-line",
+  "gratis-bg": "bg-free-bg",
+  "aksen-bg": "bg-accent-bg",
 };
 ---
 
 <Base title="Uji — token dan font">
   <div class="space-y-12">
     <header class="space-y-3">
-      <h1 class="font-display text-[32px] font-medium leading-tight text-tinta">
+      <h1 class="font-display text-[32px] font-medium leading-tight text-ink">
         Halaman uji — token dan font
       </h1>
-      <p class="max-w-[60ch] text-base leading-relaxed text-redup">
+      <p class="max-w-[60ch] text-base leading-relaxed text-muted">
         Halaman ini hanya tampil di <span class="font-data text-[11px] tracking-[0.03em]">DEV</span> untuk memverifikasi
         token warna, skala tipografi, dan Fontsource self-host. Tab untuk menguji skip link di atas.
       </p>
-      <p class="font-data text-[11px] tracking-[0.03em] text-redup">
+      <p class="font-data text-[11px] tracking-[0.03em] text-muted">
         Tip: buka DevTools → Network, muat ulang, pastikan nol permintaan ke domain selain milik sendiri.
       </p>
     </header>
 
     <!-- Swatch warna -->
     <section class="space-y-4" aria-labelledby="swatch-heading">
-      <h2 id="swatch-heading" class="font-display text-[17px] font-medium text-tinta">
+      <h2 id="swatch-heading" class="font-display text-[17px] font-medium text-ink">
         Swatch warna — 10 token
       </h2>
-      <p class="text-sm text-redup">Latar pakai token Tailwind (<code class="font-data text-[11px] tracking-[0.03em]">bg-naungan</code> dll), bukan hex mentah.</p>
+      <p class="text-sm text-muted">Latar pakai token Tailwind (<code class="font-data text-[11px] tracking-[0.03em]">bg-shade</code> dll), bukan hex mentah.</p>
       <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
         {
           swatches.map((s) => (
             <div class={`rounded-[8px] border ${s.border} overflow-hidden`}>
               <div class={`h-20 ${bgMap[s.name]} border-b ${s.border}`} aria-hidden="true" />
-              <div class="bg-permukaan px-3 py-3">
-                <p class="font-data text-[11px] tracking-[0.03em] text-tinta">{s.name}</p>
-                <p class="font-data text-[11px] tracking-[0.03em] text-redup">{s.hex}</p>
-                <p class="mt-1 text-xs leading-snug text-redup">{s.role}</p>
-                <p class={`mt-2 inline-flex rounded bg-garis px-2 py-1 font-data text-[11px] tracking-[0.03em] ${s.textClass} ${bgMap[s.name]}`}>
+              <div class="bg-surface px-3 py-3">
+                <p class="font-data text-[11px] tracking-[0.03em] text-ink">{s.name}</p>
+                <p class="font-data text-[11px] tracking-[0.03em] text-muted">{s.hex}</p>
+                <p class="mt-1 text-xs leading-snug text-muted">{s.role}</p>
+                <p class={`mt-2 inline-flex rounded bg-line px-2 py-1 font-data text-[11px] tracking-[0.03em] ${s.textClass} ${bgMap[s.name]}`}>
                   {s.name}
                 </p>
               </div>
@@ -74,41 +74,41 @@ const bgMap: Record<string, string> = {
 
     <!-- Skala tipografi -->
     <section class="space-y-4" aria-labelledby="type-heading">
-      <h2 id="type-heading" class="font-display text-[17px] font-medium text-tinta">
+      <h2 id="type-heading" class="font-display text-[17px] font-medium text-ink">
         Skala tipografi
       </h2>
-      <div class="divide-y divide-garis border-y border-garis bg-permukaan">
+      <div class="divide-y divide-line border-y border-line bg-surface">
         <div class="px-4 py-4">
-          <p class="font-data text-[11px] tracking-[0.03em] text-redup">Judul halaman — 32px / display / 500</p>
-          <p class="mt-2 font-display text-[32px] font-medium leading-none text-tinta">Suar — cari bantuan yang bisa kamu jangkau</p>
+          <p class="font-data text-[11px] tracking-[0.03em] text-muted">Judul halaman — 32px / display / 500</p>
+          <p class="mt-2 font-display text-[32px] font-medium leading-none text-ink">Suar — cari bantuan yang bisa kamu jangkau</p>
         </div>
         <div class="px-4 py-4">
-          <p class="font-data text-[11px] tracking-[0.03em] text-redup">Nama entri — 17px / display / 500</p>
-          <p class="mt-2 font-display text-[17px] font-medium leading-snug text-tinta">Puskesmas Kecamatan Menteng — Konseling psikologi</p>
+          <p class="font-data text-[11px] tracking-[0.03em] text-muted">Nama entri — 17px / display / 500</p>
+          <p class="mt-2 font-display text-[17px] font-medium leading-snug text-ink">Puskesmas Kecamatan Menteng — Konseling psikologi</p>
         </div>
         <div class="px-4 py-4">
-          <p class="font-data text-[11px] tracking-[0.03em] text-redup">Teks isi — 16px / body / 400 (minimum)</p>
-          <p class="mt-2 font-body text-base font-normal leading-relaxed text-tinta">
+          <p class="font-data text-[11px] tracking-[0.03em] text-muted">Teks isi — 16px / body / 400 (minimum)</p>
+          <p class="mt-2 font-body text-base font-normal leading-relaxed text-ink">
             Layanan konseling tatap muka dan daring, biaya menyesuaikan kemampuan. Hubungi untuk jadwal dan rujukan.
           </p>
         </div>
         <div class="px-4 py-4">
-          <p class="font-data text-[11px] tracking-[0.03em] text-redup">Keterangan entri — 14px / body / 400</p>
-          <p class="mt-2 font-body text-sm font-normal leading-relaxed text-redup">
+          <p class="font-data text-[11px] tracking-[0.03em] text-muted">Keterangan entri — 14px / body / 400</p>
+          <p class="mt-2 font-body text-sm font-normal leading-relaxed text-muted">
             Kecamatan Menteng · Perlu janji temu · Jam layanan Senin–Jumat 08.00–15.00
           </p>
         </div>
         <div class="px-4 py-4">
-          <p class="font-data text-[11px] tracking-[0.03em] text-redup">Badge — 12px / body / 400</p>
+          <p class="font-data text-[11px] tracking-[0.03em] text-muted">Badge — 12px / body / 400</p>
           <div class="mt-2 flex flex-wrap gap-2">
-            <span class="inline-flex min-h-[24px] items-center rounded bg-gratis-bg px-2 font-body text-xs font-normal text-gratis">Gratis</span>
-            <span class="inline-flex min-h-[24px] items-center rounded bg-aksen-bg px-2 font-body text-xs font-normal text-aksen">BPJS</span>
-            <span class="inline-flex min-h-[24px] items-center rounded border border-garis bg-permukaan px-2 font-body text-xs font-normal text-redup">Sliding scale</span>
+            <span class="inline-flex min-h-[24px] items-center rounded bg-free-bg px-2 font-body text-xs font-normal text-free">Gratis</span>
+            <span class="inline-flex min-h-[24px] items-center rounded bg-accent-bg px-2 font-body text-xs font-normal text-accent">BPJS</span>
+            <span class="inline-flex min-h-[24px] items-center rounded border border-line bg-surface px-2 font-body text-xs font-normal text-muted">Sliding scale</span>
           </div>
         </div>
         <div class="px-4 py-4">
-          <p class="font-data text-[11px] tracking-[0.03em] text-redup">Stempel verifikasi — 11px / data / 400 / tracking 0.03em</p>
-          <p class="mt-2 font-data text-[11px] font-normal tracking-[0.03em] text-redup">
+          <p class="font-data text-[11px] tracking-[0.03em] text-muted">Stempel verifikasi — 11px / data / 400 / tracking 0.03em</p>
+          <p class="mt-2 font-data text-[11px] font-normal tracking-[0.03em] text-muted">
             diverifikasi 12 agu 2026 · oleh tim suar
           </p>
         </div>
@@ -117,21 +117,21 @@ const bgMap: Record<string, string> = {
 
     <!-- Tiga font -->
     <section class="space-y-4" aria-labelledby="font-heading">
-      <h2 id="font-heading" class="font-display text-[17px] font-medium text-tinta">Tiga font — Fontsource self-host</h2>
-      <div class="space-y-3 rounded-[8px] border border-garis bg-permukaan px-4 py-4">
-        <p class="font-display text-base font-medium text-tinta">
-          <span class="font-data text-[11px] tracking-[0.03em] text-redup">display · </span>
+      <h2 id="font-heading" class="font-display text-[17px] font-medium text-ink">Tiga font — Fontsource self-host</h2>
+      <div class="space-y-3 rounded-[8px] border border-line bg-surface px-4 py-4">
+        <p class="font-display text-base font-medium text-ink">
+          <span class="font-data text-[11px] tracking-[0.03em] text-muted">display · </span>
           Bricolage Grotesque Variable — judul dan nama entri
         </p>
-        <p class="font-body text-base font-normal text-tinta">
-          <span class="font-data text-[11px] tracking-[0.03em] text-redup">body · </span>
+        <p class="font-body text-base font-normal text-ink">
+          <span class="font-data text-[11px] tracking-[0.03em] text-muted">body · </span>
           Public Sans Variable — teks isi dan keterangan
         </p>
-        <p class="font-data text-sm font-normal tracking-[0.02em] text-tinta">
-          <span class="font-data text-[11px] tracking-[0.03em] text-redup">data · </span>
+        <p class="font-data text-sm font-normal tracking-[0.02em] text-ink">
+          <span class="font-data text-[11px] tracking-[0.03em] text-muted">data · </span>
           IBM Plex Mono 400/500 — stempel, harga, tanggal
         </p>
-        <p class="font-data text-[11px] tracking-[0.03em] text-redup">
+        <p class="font-data text-[11px] tracking-[0.03em] text-muted">
           Impor: @fontsource-variable/bricolage-grotesque, @fontsource-variable/public-sans, @fontsource/ibm-plex-mono/400.css + 500.css — tanpa CDN.
         </p>
       </div>
@@ -139,36 +139,36 @@ const bgMap: Record<string, string> = {
 
     <!-- Stempel verifikasi 3 state -->
     <section class="space-y-4" aria-labelledby="stempel-heading">
-      <h2 id="stempel-heading" class="font-display text-[17px] font-medium text-tinta">
+      <h2 id="stempel-heading" class="font-display text-[17px] font-medium text-ink">
         Stempel verifikasi — 3 state
       </h2>
-      <p class="text-sm text-redup">
+      <p class="text-sm text-muted">
         Titik warna menandakan umur verifikasi. Entri kedaluwarsa ditandai, bukan disembunyikan.
       </p>
       <div class="space-y-3">
-        <div class="flex items-center gap-3 border-b border-garis bg-permukaan px-4 py-3">
-          <span class="inline-block h-2 w-2 shrink-0 rounded-full bg-aksen" aria-hidden="true"></span>
-          <p class="font-data text-[11px] tracking-[0.03em] text-redup">diverifikasi 12 agu 2026 · baru dicek</p>
+        <div class="flex items-center gap-3 border-b border-line bg-surface px-4 py-3">
+          <span class="inline-block h-2 w-2 shrink-0 rounded-full bg-accent" aria-hidden="true"></span>
+          <p class="font-data text-[11px] tracking-[0.03em] text-muted">diverifikasi 12 agu 2026 · baru dicek</p>
         </div>
-        <div class="flex items-center gap-3 border-b border-garis bg-permukaan px-4 py-3">
-          <span class="inline-block h-2 w-2 shrink-0 rounded-full bg-gratis" aria-hidden="true"></span>
-          <p class="font-data text-[11px] tracking-[0.03em] text-redup">diverifikasi 10 jul 2026 · mulai lama</p>
+        <div class="flex items-center gap-3 border-b border-line bg-surface px-4 py-3">
+          <span class="inline-block h-2 w-2 shrink-0 rounded-full bg-free" aria-hidden="true"></span>
+          <p class="font-data text-[11px] tracking-[0.03em] text-muted">diverifikasi 10 jul 2026 · mulai lama</p>
         </div>
-        <div class="flex items-center gap-3 border-b border-garis bg-permukaan px-4 py-3">
-          <span class="inline-block h-2 w-2 shrink-0 rounded-full bg-usang" aria-hidden="true"></span>
-          <p class="font-data text-[11px] tracking-[0.03em] text-usang">diverifikasi 03 mei 2026 · perlu dicek ulang</p>
+        <div class="flex items-center gap-3 border-b border-line bg-surface px-4 py-3">
+          <span class="inline-block h-2 w-2 shrink-0 rounded-full bg-stale" aria-hidden="true"></span>
+          <p class="font-data text-[11px] tracking-[0.03em] text-stale">diverifikasi 03 mei 2026 · perlu dicek ulang</p>
         </div>
       </div>
     </section>
 
     <!-- Uji skip link -->
     <section class="space-y-2" aria-labelledby="skip-heading">
-      <h2 id="skip-heading" class="font-display text-[17px] font-medium text-tinta">Uji skip link</h2>
-      <p class="text-sm leading-relaxed text-redup">
-        Tekan <kbd class="rounded border border-garis bg-permukaan px-1.5 py-0.5 font-data text-[11px] tracking-[0.03em]">Tab</kbd> dari awal halaman — tautan “Lewati ke konten utama” harus muncul dan fokus pindah ke
+      <h2 id="skip-heading" class="font-display text-[17px] font-medium text-ink">Uji skip link</h2>
+      <p class="text-sm leading-relaxed text-muted">
+        Tekan <kbd class="rounded border border-line bg-surface px-1.5 py-0.5 font-data text-[11px] tracking-[0.03em]">Tab</kbd> dari awal halaman — tautan “Lewati ke konten utama” harus muncul dan fokus pindah ke
         <code class="font-data text-[11px] tracking-[0.03em]">#main</code>.
       </p>
-      <a href="#main" class="inline-flex min-h-[44px] items-center text-sm text-aksen underline underline-offset-4">Coba skip link lagi</a>
+      <a href="#main" class="inline-flex min-h-[44px] items-center text-sm text-accent underline underline-offset-4">Coba skip link lagi</a>
     </section>
   </div>
 </Base>

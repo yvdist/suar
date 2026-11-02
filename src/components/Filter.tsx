@@ -158,7 +158,7 @@ export default function Filter({ total }: { total: number }) {
       <div>
         <label
           for="cari-layanan"
-          class="mb-2 block text-sm font-normal text-tinta"
+          class="mb-2 block text-sm font-normal text-ink"
         >
           Cari layanan
         </label>
@@ -168,12 +168,12 @@ export default function Filter({ total }: { total: number }) {
           value={state.q}
           onInput={(e) => setState((s) => ({ ...s, q: (e.target as HTMLInputElement).value }))}
           placeholder="Nama atau kecamatan"
-          class="min-h-[44px] w-full rounded-[8px] border border-garis bg-permukaan px-3 text-base font-normal text-tinta placeholder:text-redup focus:outline-2 focus:outline-aksen"
+          class="min-h-[44px] w-full rounded-[8px] border border-line bg-surface px-3 text-base font-normal text-ink placeholder:text-muted focus:outline-2 focus:outline-accent"
         />
       </div>
 
       <fieldset>
-        <legend class="mb-2 text-sm font-normal text-tinta">Biaya</legend>
+        <legend class="mb-2 text-sm font-normal text-ink">Biaya</legend>
         <div class="flex flex-col gap-1">
           {(
             [
@@ -185,7 +185,7 @@ export default function Filter({ total }: { total: number }) {
           ).map(([nilai, label]) => (
             <label
               key={nilai}
-              class="inline-flex min-h-[44px] cursor-pointer items-center gap-3 text-base font-normal text-tinta"
+              class="inline-flex min-h-[44px] cursor-pointer items-center gap-3 text-base font-normal text-ink"
             >
               <input
                 type="radio"
@@ -202,12 +202,12 @@ export default function Filter({ total }: { total: number }) {
       </fieldset>
 
       <fieldset>
-        <legend class="mb-2 text-sm font-normal text-tinta">Jenis</legend>
+        <legend class="mb-2 text-sm font-normal text-ink">Jenis</legend>
         <div class="flex flex-col gap-1">
           {JENIS_OPSI.map((nilai) => (
             <label
               key={nilai}
-              class="inline-flex min-h-[44px] cursor-pointer items-center gap-3 text-base font-normal text-tinta"
+              class="inline-flex min-h-[44px] cursor-pointer items-center gap-3 text-base font-normal text-ink"
             >
               <input
                 type="checkbox"
@@ -222,7 +222,7 @@ export default function Filter({ total }: { total: number }) {
       </fieldset>
 
       <fieldset>
-        <legend class="mb-2 text-sm font-normal text-tinta">Cara</legend>
+        <legend class="mb-2 text-sm font-normal text-ink">Cara</legend>
         <div class="flex flex-col gap-1">
           {(
             [
@@ -232,7 +232,7 @@ export default function Filter({ total }: { total: number }) {
           ).map(([nilai, label]) => (
             <label
               key={nilai}
-              class="inline-flex min-h-[44px] cursor-pointer items-center gap-3 text-base font-normal text-tinta"
+              class="inline-flex min-h-[44px] cursor-pointer items-center gap-3 text-base font-normal text-ink"
             >
               <input
                 type="checkbox"
@@ -247,7 +247,7 @@ export default function Filter({ total }: { total: number }) {
       </fieldset>
 
       <fieldset>
-        <legend class="mb-2 text-sm font-normal text-tinta">Syarat</legend>
+        <legend class="mb-2 text-sm font-normal text-ink">Syarat</legend>
         <div class="flex flex-col gap-1">
           {(
             [
@@ -257,7 +257,7 @@ export default function Filter({ total }: { total: number }) {
           ).map(([nilai, label]) => (
             <label
               key={nilai}
-              class="inline-flex min-h-[44px] cursor-pointer items-center gap-3 text-base font-normal text-tinta"
+              class="inline-flex min-h-[44px] cursor-pointer items-center gap-3 text-base font-normal text-ink"
             >
               <input
                 type="checkbox"
@@ -275,7 +275,7 @@ export default function Filter({ total }: { total: number }) {
         <button
           type="button"
           onClick={aturUlang}
-          class="inline-flex min-h-[44px] items-center text-sm font-normal text-aksen underline underline-offset-4"
+          class="inline-flex min-h-[44px] items-center text-sm font-normal text-accent underline underline-offset-4"
         >
           Atur ulang
         </button>
@@ -285,21 +285,21 @@ export default function Filter({ total }: { total: number }) {
 
   return (
     <div>
-      <p aria-live="polite" class="font-data text-xs font-normal text-redup">
+      <p aria-live="polite" class="font-data text-xs font-normal text-muted">
         {jumlah} dari {total} layanan
       </p>
 
       {jumlah === 0 && (
-        <div class="mt-4 space-y-2 rounded-[8px] border border-garis bg-permukaan p-[16px_18px]">
-          <p class="text-base font-normal text-tinta">
+        <div class="mt-4 space-y-2 rounded-[8px] border border-line bg-surface p-[16px_18px]">
+          <p class="text-base font-normal text-ink">
             Tidak ada layanan yang cocok dengan filter ini.
           </p>
-          <p class="text-sm font-normal leading-relaxed text-redup">
+          <p class="text-sm font-normal leading-relaxed text-muted">
             Coba longgarkan filter biaya, atau{" "}
             <button
               type="button"
               onClick={aturUlang}
-              class="inline-flex min-h-[44px] items-center text-aksen underline underline-offset-4"
+              class="inline-flex min-h-[44px] items-center text-accent underline underline-offset-4"
             >
               lihat semua {total} layanan
             </button>
@@ -318,7 +318,7 @@ export default function Filter({ total }: { total: number }) {
           type="button"
           onClick={() => setSheetTerbuka(true)}
           aria-haspopup="dialog"
-          class="inline-flex min-h-[44px] items-center gap-2 rounded-[8px] border border-garis bg-permukaan px-4 text-sm font-normal text-tinta"
+          class="inline-flex min-h-[44px] items-center gap-2 rounded-[8px] border border-line bg-surface px-4 text-sm font-normal text-ink"
         >
           Filter{jumlahAktif > 0 ? ` (${jumlahAktif})` : ""}
         </button>
@@ -329,16 +329,16 @@ export default function Filter({ total }: { total: number }) {
           role="dialog"
           aria-modal="true"
           aria-label="Filter layanan"
-          class="fixed inset-x-0 bottom-0 z-50 max-h-[85vh] overflow-y-auto rounded-t-[12px] border-t border-garis bg-permukaan px-5 pb-8 pt-4 min-[900px]:hidden"
+          class="fixed inset-x-0 bottom-0 z-50 max-h-[85vh] overflow-y-auto rounded-t-[12px] border-t border-line bg-surface px-5 pb-8 pt-4 min-[900px]:hidden"
         >
           <div class="mb-4 flex items-center justify-between">
-            <p class="font-display text-[17px] font-medium text-tinta">
+            <p class="font-display text-[17px] font-medium text-ink">
               Filter{jumlahAktif > 0 ? ` (${jumlahAktif})` : ""}
             </p>
             <button
               type="button"
               onClick={() => setSheetTerbuka(false)}
-              class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-[8px] border border-garis text-sm font-normal text-tinta"
+              class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-[8px] border border-line text-sm font-normal text-ink"
             >
               Tutup
             </button>
@@ -347,7 +347,7 @@ export default function Filter({ total }: { total: number }) {
           <button
             type="button"
             onClick={() => setSheetTerbuka(false)}
-            class="mt-6 inline-flex min-h-[44px] w-full items-center justify-center rounded-[8px] bg-aksen px-4 text-base font-medium text-permukaan"
+            class="mt-6 inline-flex min-h-[44px] w-full items-center justify-center rounded-[8px] bg-accent px-4 text-base font-medium text-surface"
           >
             Lihat {jumlah} layanan
           </button>

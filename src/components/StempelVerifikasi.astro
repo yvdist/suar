@@ -10,11 +10,11 @@ const status = statusKesegaran(lastVerified);
 const tanggal = formatTanggalPendek(lastVerified);
 
 const titikClass =
-  status === "segar" ? "bg-aksen" : status === "menua" ? "bg-gratis" : "bg-usang";
-const teksClass = status === "usang" ? "text-usang" : "text-redup";
+  status === "segar" ? "bg-accent" : status === "menua" ? "bg-free" : "bg-stale";
+const teksClass = status === "usang" ? "text-stale" : "text-muted";
 ---
 
-<div class="border-t border-garis pt-3">
+<div class="border-t border-line pt-3">
   <p class={`flex items-center gap-2 font-data text-[11px] tracking-[0.03em] uppercase ${teksClass}`}>
     <span class={`inline-block h-[7px] w-[7px] shrink-0 rounded-full ${titikClass}`} aria-hidden="true"></span>
     <time datetime={lastVerified.toISOString()}>

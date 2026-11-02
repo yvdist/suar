@@ -19,13 +19,13 @@ const tanggalTerbaru = entri.reduce<Date | null>((terbaru, item) => {
 >
   <div class="space-y-6">
     <div class="space-y-3">
-      <h1 class="font-display text-[32px] font-medium leading-tight text-tinta">
+      <h1 class="font-display text-[32px] font-medium leading-tight text-ink">
         Daftar layanan
       </h1>
-      <p class="max-w-[60ch] text-base font-normal leading-relaxed text-tinta">
+      <p class="max-w-[60ch] text-base font-normal leading-relaxed text-ink">
         Layanan kesehatan mental di Bandung beserta biayanya.
       </p>
-      <p class="font-data text-xs font-normal tracking-normal text-redup">
+      <p class="font-data text-xs font-normal tracking-normal text-muted">
         {entri.length} layanan
         {tanggalTerbaru &&
           ` · diperbarui ${tanggalTerbaru.getDate()}/${tanggalTerbaru.getMonth() + 1}/${tanggalTerbaru.getFullYear()}`}

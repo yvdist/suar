@@ -11,7 +11,7 @@ const { entry } = Astro.props;
 const data = entry.data;
 
 const gratis = data.harga_min === 0;
-const hargaClass = gratis ? "text-aksen" : "text-redup";
+const hargaClass = gratis ? "text-accent" : "text-muted";
 
 const labelJenis: Record<string, string> = {
   psikolog: "Psikolog",
@@ -63,10 +63,10 @@ const badge = semuaBadge.slice(0, 3);
 >
   <a
     href={`/layanan/${entry.id}`}
-    class="block rounded-[8px] bg-permukaan p-[16px_18px] no-underline transition-colors hover:bg-naungan focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aksen"
+    class="block rounded-[8px] bg-surface p-[16px_18px] no-underline transition-colors hover:bg-shade focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
   >
     <div class="flex items-baseline justify-between gap-4">
-      <h2 class="font-display text-[17px] font-medium tracking-[-0.01em] text-tinta">
+      <h2 class="font-display text-[17px] font-medium tracking-[-0.01em] text-ink">
         {data.nama}
       </h2>
       <p class={`shrink-0 font-data text-xs font-normal ${hargaClass}`}>
@@ -75,7 +75,7 @@ const badge = semuaBadge.slice(0, 3);
     </div>
 
     {keterangan && (
-      <p class="mt-1 text-sm font-normal leading-relaxed text-redup">{keterangan}</p>
+      <p class="mt-1 text-sm font-normal leading-relaxed text-muted">{keterangan}</p>
     )}
 
     {badge.length > 0 && (
@@ -83,7 +83,7 @@ const badge = semuaBadge.slice(0, 3);
         {badge.map((b) => (
           <span
             class={`inline-flex items-center rounded-[4px] px-[9px] py-[3px] text-xs font-normal leading-snug ${
-              b.penting ? "bg-gratis-bg text-gratis" : "bg-aksen-bg text-redup"
+              b.penting ? "bg-free-bg text-free" : "bg-accent-bg text-muted"
             }`}
           >
             {b.teks}

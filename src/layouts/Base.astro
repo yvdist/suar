@@ -23,19 +23,19 @@ const pageTitle = title ? `${title} \u2014 suar` : "suar";
     <meta name="generator" content={Astro.generator} />
     <title>{pageTitle}</title>
   </head>
-  <body class="bg-naungan text-tinta font-body antialiased">
+  <body class="bg-shade text-ink font-body antialiased">
     <a
       href="#main"
-      class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:inline-flex focus:min-h-[44px] focus:min-w-[44px] focus:items-center focus:bg-aksen focus:px-4 focus:py-3 focus:text-permukaan focus:text-sm focus:font-medium focus:outline-none focus:ring-2 focus:ring-tinta focus:ring-offset-2"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:inline-flex focus:min-h-[44px] focus:min-w-[44px] focus:items-center focus:bg-accent focus:px-4 focus:py-3 focus:text-surface focus:text-sm focus:font-medium focus:outline-none focus:ring-2 focus:ring-ink focus:ring-offset-2"
     >
       Lewati ke konten utama
     </a>
 
-    <header class="border-b border-garis bg-naungan">
+    <header class="border-b border-line bg-shade">
       <div class="max-w-[720px] px-5 py-4">
         <a
           href="/"
-          class="font-display text-[20px] font-medium tracking-tight text-tinta no-underline"
+          class="font-display text-[20px] font-medium tracking-tight text-ink no-underline"
         >
           suar
         </a>
@@ -52,31 +52,31 @@ const pageTitle = title ? `${title} \u2014 suar` : "suar";
 
     <JalurDarurat />
 
-    <footer class="border-t border-garis bg-naungan">
+    <footer class="border-t border-line bg-shade">
       <div
         class="max-w-[720px] flex flex-wrap gap-x-6 gap-y-2 px-5 py-6 text-sm"
       >
         <a
           href="/tentang"
-          class="inline-flex min-h-[44px] items-center text-redup underline decoration-garis underline-offset-4 hover:text-tinta hover:decoration-tinta"
+          class="inline-flex min-h-[44px] items-center text-muted underline decoration-line underline-offset-4 hover:text-ink hover:decoration-ink"
         >
           Tentang
         </a>
         <a
           href="/batasan"
-          class="inline-flex min-h-[44px] items-center text-redup underline decoration-garis underline-offset-4 hover:text-tinta hover:decoration-tinta"
+          class="inline-flex min-h-[44px] items-center text-muted underline decoration-line underline-offset-4 hover:text-ink hover:decoration-ink"
         >
           Batasan layanan
         </a>
         <a
           href="/privasi"
-          class="inline-flex min-h-[44px] items-center text-redup underline decoration-garis underline-offset-4 hover:text-tinta hover:decoration-tinta"
+          class="inline-flex min-h-[44px] items-center text-muted underline decoration-line underline-offset-4 hover:text-ink hover:decoration-ink"
         >
           Privasi
         </a>
         <a
           href="/lapor"
-          class="inline-flex min-h-[44px] items-center text-redup underline decoration-garis underline-offset-4 hover:text-tinta hover:decoration-tinta"
+          class="inline-flex min-h-[44px] items-center text-muted underline decoration-line underline-offset-4 hover:text-ink hover:decoration-ink"
         >
           Lapor perubahan
         </a>

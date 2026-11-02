@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  --color-naungan: #EFF2EF;
-  --color-permukaan: #FFFFFF;
-  --color-tinta: #1C2420;
-  --color-redup: #5F6B64;
-  --color-aksen: #1F5148;
-  --color-gratis: #8C6A16;
-  --color-usang: #8A4B3A;
+  --color-shade: #EFF2EF;
+  --color-surface: #FFFFFF;
+  --color-ink: #1C2420;
+  --color-muted: #5F6B64;
+  --color-accent: #1F5148;
+  --color-free: #8C6A16;
+  --color-stale: #8A4B3A;
 
-  --color-garis: #DDE3E0;
-  --color-gratis-bg: #F0E9D4;
-  --color-aksen-bg: #E3EAE7;
+  --color-line: #DDE3E0;
+  --color-free-bg: #F0E9D4;
+  --color-accent-bg: #E3EAE7;
 
   --font-display: "Bricolage Grotesque Variable", system-ui, sans-serif;
   --font-body: "Public Sans Variable", system-ui, sans-serif;
