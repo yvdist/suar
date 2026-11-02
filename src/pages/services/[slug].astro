@@ -61,9 +61,29 @@ const visitSentences = visitInfo(
 const hasContact = Boolean(data.phone ?? data.whatsapp ?? data.website ?? data.instagram);
 const sectionHeading =
   "font-data text-[11px] font-normal uppercase tracking-[0.08em] text-muted";
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "MedicalClinic",
+  name: data.name,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: data.city,
+    ...(data.address ? { streetAddress: data.address } : {}),
+  },
+  ...(data.phone ? { telephone: data.phone } : {}),
+  ...(data.website ? { url: data.website } : {}),
+  ...(data.hours ? { openingHours: data.hours } : {}),
+  priceRange: price,
+};
 ---
 
-<Base title={pageTitle} description={shortDescription(data.name, typeName, data.city, price)}>
+<Base
+  title={pageTitle}
+  description={shortDescription(data.name, typeName, data.city, price)}
+  canonical={`/services/${entry.id}`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   <div class="space-y-6">
     <a
       id="back"
