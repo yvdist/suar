@@ -17,13 +17,21 @@ const newestDate = entries.reduce<Date | null>((newest, item) => {
   title="Daftar layanan"
   description="Layanan kesehatan mental terjangkau di Bandung beserta biayanya."
 >
+  <head>
+    <meta property="og:title" content="suar — direktori layanan kesehatan mental terjangkau" />
+    <meta property="og:description" content="Psikolog, konseling, dan layanan kesehatan mental terjangkau di Bandung beserta biayanya." />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:url" content="https://suar.web.id/" />
+  </head>
   <div class="space-y-6">
     <div class="space-y-3">
       <h1 class="font-display text-[32px] font-medium leading-tight text-ink">
         Daftar layanan
       </h1>
       <p class="max-w-[60ch] text-base font-normal leading-relaxed text-ink">
-        Layanan kesehatan mental di Bandung beserta biayanya.
+        Psikolog, konseling, dan layanan kesehatan mental terjangkau di Bandung
+        beserta biayanya. Lihat harga, cara datang, dan kontak tiap layanan.
       </p>
       <p class="font-data text-xs font-normal tracking-normal text-muted">
         {entries.length} layanan
