@@ -1,0 +1,85 @@
+---
+import type { CollectionEntry } from "astro:content";
+import StempelVerifikasi from "./StempelVerifikasi.astro";
+import { formatHarga } from "../lib/harga";
+
+interface Props {
+  entry: CollectionEntry<"layanan">;
+}
+
+const { entry } = Astro.props;
+const data = entry.data;
+
+const gratis = data.harga_min === 0;
+const hargaClass = gratis ? "text-aksen" : "text-redup";
+
+const labelJenis: Record<string, string> = {
+  psikolog: "Psikolog",
+  psikiater: "Psikiater",
+  konseling: "Konseling",
+  komunitas: "Komunitas",
+  hotline: "Hotline",
+};
+
+const lokasi = [data.kota, data.kecamatan].filter(Boolean).join(", ");
+const keterangan = [labelJenis[data.jenis] ?? data.jenis, lokasi, data.jam_layanan]
+  .filter((bagian) => bagian && bagian.trim().length > 0)
+  .join(" · ");
+
+const labelSkema: Record<string, string> = {
+  gratis: "Gratis",
+  bpjs: "Ditanggung BPJS",
+  "sliding-scale": "Sliding scale",
+  "tarif-tetap": "Tarif tetap",
+};
+
+interface Badge {
+  teks: string;
+  penting: boolean;
+}
+
+const semuaBadge: Badge[] = [
+  { teks: labelSkema[data.skema_biaya] ?? data.skema_biaya, penting: true },
+  ...(!data.perlu_rujukan ? [{ teks: "Tanpa rujukan", penting: false } as Badge] : []),
+  ...(data.online ? [{ teks: "Daring", penting: false } as Badge] : []),
+];
+const badge = semuaBadge.slice(0, 3);
+---
+
+<li>
+  <a
+    href={`/layanan/${entry.id}`}
+    class="block rounded-[8px] bg-permukaan p-[16px_18px] no-underline transition-colors hover:bg-naungan focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aksen"
+  >
+    <div class="flex items-baseline justify-between gap-4">
+      <h2 class="font-display text-[17px] font-medium tracking-[-0.01em] text-tinta">
+        {data.nama}
+      </h2>
+      <p class={`shrink-0 font-data text-xs font-normal ${hargaClass}`}>
+        {formatHarga(data)}
+      </p>
+    </div>
+
+    {keterangan && (
+      <p class="mt-1 text-sm font-normal leading-relaxed text-redup">{keterangan}</p>
+    )}
+
+    {badge.length > 0 && (
+      <div class="mt-2 flex flex-wrap gap-2">
+        {badge.map((b) => (
+          <span
+            class={`inline-flex items-center rounded-[4px] px-[9px] py-[3px] text-xs font-normal leading-snug ${
+              b.penting ? "bg-gratis-bg text-gratis" : "bg-aksen-bg text-redup"
+            }`}
+          >
+            {b.teks}
+          </span>
+        ))}
+      </div>
+    )}
+
+    <div class="mt-3">
+      <StempelVerifikasi lastVerified={data.last_verified} />
+    </div>
+  </a>
+</li>
