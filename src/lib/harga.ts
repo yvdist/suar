@@ -17,9 +17,11 @@ function formatRingkas(nilai: number): string {
 
 export function formatHarga(entry: HargaInput): string {
   if (entry.harga_min === 0) return "Rp0";
-  if (entry.skema_biaya === "sliding-scale") return "Sesuai kemampuan";
+  if (entry.skema_biaya === "sliding-scale" && (entry.harga_max === undefined || entry.harga_max <= entry.harga_min)) {
+    return "Sesuai kemampuan";
+  }
   if (entry.harga_max !== undefined && entry.harga_max > entry.harga_min) {
-    return `Rp${formatRingkas(entry.harga_min)}–${formatRingkas(entry.harga_max)}`;
+    return `Rp${formatRingkas(entry.harga_min)}–${formatRingkas(entry.harga_max).replace(/^Rp/, "")}`;
   }
   return `Rp${formatRibuan(entry.harga_min)}`;
 }
