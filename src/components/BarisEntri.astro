@@ -46,7 +46,19 @@ const semuaBadge: Badge[] = [
 const badge = semuaBadge.slice(0, 3);
 ---
 
-<li>
+<li
+  id={`entri-${entry.id}`}
+  data-key={entry.id}
+  data-nama={data.nama.toLowerCase()}
+  data-kecamatan={(data.kecamatan ?? "").toLowerCase()}
+  data-skema={data.skema_biaya}
+  data-harga={String(data.harga_min)}
+  data-jenis={data.jenis}
+  data-online={data.online ? "1" : ""}
+  data-tatap={data.tatap_muka ? "1" : ""}
+  data-tanpa-rujukan={!data.perlu_rujukan ? "1" : ""}
+  data-tanpa-janji={!data.perlu_janji ? "1" : ""}
+>
   <a
     href={`/layanan/${entry.id}`}
     class="block rounded-[8px] bg-permukaan p-[16px_18px] no-underline transition-colors hover:bg-naungan focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aksen"
