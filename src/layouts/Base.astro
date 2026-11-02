@@ -4,6 +4,7 @@ import "@fontsource-variable/public-sans";
 import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/500.css";
 import "../styles/global.css";
+import JalurDarurat from "./JalurDarurat.astro";
 
 interface Props {
   title?: string;
@@ -41,18 +42,6 @@ const pageTitle = title ? `${title} \u2014 suar` : "suar";
       </div>
     </header>
 
-    <aside
-      aria-label="Bantuan darurat"
-      class="border-y border-garis bg-aksen-bg"
-    >
-      <div class="max-w-[720px] px-5 py-3">
-        <p class="text-sm text-redup">
-          <!-- Slot bantuan darurat — isi menyusul di Fase 06 -->
-          Jalur bantuan darurat akan tampil di sini.
-        </p>
-      </div>
-    </aside>
-
     <main
       id="main"
       tabindex="-1"
@@ -60,6 +49,8 @@ const pageTitle = title ? `${title} \u2014 suar` : "suar";
     >
       <slot />
     </main>
+
+    <JalurDarurat />
 
     <footer class="border-t border-garis bg-naungan">
       <div
