@@ -84,6 +84,7 @@ export default function Filter({ total }: { total: number }) {
   const [count, setCount] = useState(total);
   const rowsRef = useRef<RowData[]>([]);
   const filterButtonRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     rowsRef.current = Array.from(
@@ -124,11 +125,33 @@ export default function Filter({ total }: { total: number }) {
 
   useEffect(() => {
     if (!sheetOpen) return;
-    const close = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setSheetOpen(false);
+    const dialog = dialogRef.current;
+    const closeButton = dialog?.querySelector<HTMLElement>("input, button");
+    closeButton?.focus();
+    const trap = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setSheetOpen(false);
+        return;
+      }
+      if (e.key !== "Tab" || !dialog) return;
+      const focusables = Array.from(
+        dialog.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((el) => el.offsetParent !== null);
+      if (focusables.length === 0) return;
+      const first = focusables[0]!;
+      const last = focusables[focusables.length - 1]!;
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
-    document.addEventListener("keydown", close);
-    return () => document.removeEventListener("keydown", close);
+    document.addEventListener("keydown", trap);
+    return () => document.removeEventListener("keydown", trap);
   }, [sheetOpen]);
 
   useEffect(() => {
@@ -326,6 +349,7 @@ export default function Filter({ total }: { total: number }) {
 
       {sheetOpen && (
         <div
+          ref={dialogRef}
           role="dialog"
           aria-modal="true"
           aria-label="Filter layanan"
