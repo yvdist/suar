@@ -1,17 +1,16 @@
 ---
-import "@fontsource-variable/bricolage-grotesque";
-import "@fontsource-variable/public-sans";
-import "@fontsource/ibm-plex-mono/400.css";
-import "@fontsource/ibm-plex-mono/500.css";
+import "@fontsource/ibm-plex-mono/latin-400.css";
+import "@fontsource/ibm-plex-mono/latin-500.css";
 import "../styles/global.css";
 import EmergencyStrip from "../components/EmergencyStrip.astro";
 
 interface Props {
   title?: string;
   description?: string;
+  canonical?: string;
 }
 
-const { title, description = "Cari bantuan yang bisa kamu jangkau." } = Astro.props;
+const { title, description = "Cari bantuan yang bisa kamu jangkau.", canonical = "/" } = Astro.props;
 const pageTitle = title ? `${title} \u2014 suar` : "suar";
 ---
 
@@ -21,6 +20,21 @@ const pageTitle = title ? `${title} \u2014 suar` : "suar";
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+      href="/_astro/bricolage-grotesque-latin-wght-normal.DLoelf7F.woff2"
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+      href="/_astro/public-sans-latin-wght-normal.DdeTHZLK.woff2"
+    />
+    <link rel="canonical" href={`https://suar.web.id${canonical}`} />
     <title>{pageTitle}</title>
   </head>
   <body class="bg-shade text-ink font-body antialiased">
