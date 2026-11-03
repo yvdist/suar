@@ -1,0 +1,27 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base
+  title="Halaman tidak ditemukan"
+  description="Halaman yang kamu cari tidak ada. Kembali ke daftar layanan."
+  canonical="/404"
+>
+  <div class="max-w-[60ch] space-y-4">
+    <h1 class="font-display text-[32px] font-medium leading-tight text-ink">
+      Halaman tidak ditemukan
+    </h1>
+    <p class="text-base font-normal leading-relaxed text-ink">
+      Alamat yang kamu buka tidak ada di sini. Mungkin salah ketik, atau
+      tautannya sudah lama.
+    </p>
+    <p>
+      <a
+        href="/"
+        class="inline-flex min-h-[44px] items-center text-base font-normal text-accent underline underline-offset-4"
+      >
+        Kembali ke daftar layanan
+      </a>
+    </p>
+  </div>
+</Base>
