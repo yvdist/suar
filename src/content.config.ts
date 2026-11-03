@@ -2,67 +2,67 @@ import { defineCollection } from "astro:content";
 import { z } from "astro/zod";
 import { glob } from "astro/loaders";
 
-const layanan = defineCollection({
-  loader: glob({ pattern: "**/*.json", base: "./src/content/layanan" }),
+const services = defineCollection({
+  loader: glob({ pattern: "**/*.json", base: "./src/content/services" }),
   schema: z
     .object({
-      nama: z.string().min(1),
-      jenis: z.enum(["psikolog", "psikiater", "konseling", "komunitas", "hotline"]),
-      kota: z.string().min(1),
-      kecamatan: z.string().optional(),
-      alamat: z.string().optional(),
-      telepon: z.string().optional(),
+      name: z.string().min(1),
+      type: z.enum(["psychologist", "psychiatrist", "counseling", "community", "hotline"]),
+      city: z.string().min(1),
+      district: z.string().optional(),
+      address: z.string().optional(),
+      phone: z.string().optional(),
       whatsapp: z.string().optional(),
-      situs: z.httpUrl().optional(),
+      website: z.httpUrl().optional(),
       instagram: z
         .string()
         .regex(/^[^@\s][\w.]*$/, "instagram handle without @")
         .optional(),
-      harga_min: z.number().int().min(0),
-      harga_max: z.number().int().min(0).optional(),
-      skema_biaya: z.enum(["gratis", "bpjs", "sliding-scale", "tarif-tetap"]),
+      price_min: z.number().int().min(0),
+      price_max: z.number().int().min(0).optional(),
+      pricing: z.enum(["free", "bpjs", "sliding-scale", "fixed-rate"]),
       online: z.boolean(),
-      tatap_muka: z.boolean(),
-      perlu_rujukan: z.boolean(),
-      perlu_janji: z.boolean(),
-      jam_layanan: z.string().optional(),
-      catatan: z.string().max(200).optional(),
-      status: z.enum(["aktif", "tutup"]).default("aktif"),
+      in_person: z.boolean(),
+      needs_referral: z.boolean(),
+      needs_appointment: z.boolean(),
+      hours: z.string().optional(),
+      notes: z.string().max(200).optional(),
+      status: z.enum(["active", "closed"]).default("active"),
       last_verified: z.coerce.date().refine((d) => d.getTime() <= Date.now(), {
         message: "last_verified cannot be in the future",
       }),
       verified_by: z.string().min(1),
-      sumber: z.union([z.httpUrl(), z.string().min(1)]),
+      source: z.union([z.httpUrl(), z.string().min(1)]),
     })
     .superRefine((entry, ctx) => {
-      if (entry.skema_biaya === "gratis" && entry.harga_min !== 0) {
+      if (entry.pricing === "free" && entry.price_min !== 0) {
         ctx.addIssue({
           code: "custom",
-          path: ["harga_min"],
-          message: "gratis entries must have harga_min 0",
+          path: ["price_min"],
+          message: "free entries must have price_min 0",
         });
       }
       const hasContact = Boolean(
-        entry.telepon?.trim() ||
+        entry.phone?.trim() ||
           entry.whatsapp?.trim() ||
-          entry.situs?.trim() ||
+          entry.website?.trim() ||
           entry.instagram?.trim(),
       );
       if (!hasContact) {
         ctx.addIssue({
           code: "custom",
-          path: ["telepon"],
-          message: "at least one contact (telepon, whatsapp, situs, instagram) is required",
+          path: ["phone"],
+          message: "at least one contact (phone, whatsapp, website, instagram) is required",
         });
       }
-      if (!entry.online && !entry.tatap_muka) {
+      if (!entry.online && !entry.in_person) {
         ctx.addIssue({
           code: "custom",
           path: ["online"],
-          message: "at least one of online or tatap_muka must be true",
+          message: "at least one of online or in_person must be true",
         });
       }
     }),
 });
 
-export const collections = { layanan };
+export const collections = { services };

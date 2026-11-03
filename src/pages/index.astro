@@ -1,15 +1,15 @@
 ---
 import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
-import BarisEntri from "../components/BarisEntri.astro";
+import EntryRow from "../components/EntryRow.astro";
 import Filter from "../components/Filter";
 
-const semuaEntri = await getCollection("layanan");
-const entri = [...semuaEntri].sort((a, b) => a.data.harga_min - b.data.harga_min);
+const allEntries = await getCollection("services");
+const entries = [...allEntries].sort((a, b) => a.data.price_min - b.data.price_min);
 
-const tanggalTerbaru = entri.reduce<Date | null>((terbaru, item) => {
+const newestDate = entries.reduce<Date | null>((newest, item) => {
   const t = item.data.last_verified;
-  return !terbaru || t > terbaru ? t : terbaru;
+  return !newest || t > newest ? t : newest;
 }, null);
 ---
 
@@ -19,29 +19,29 @@ const tanggalTerbaru = entri.reduce<Date | null>((terbaru, item) => {
 >
   <div class="space-y-6">
     <div class="space-y-3">
-      <h1 class="font-display text-[32px] font-medium leading-tight text-tinta">
+      <h1 class="font-display text-[32px] font-medium leading-tight text-ink">
         Daftar layanan
       </h1>
-      <p class="max-w-[60ch] text-base font-normal leading-relaxed text-tinta">
+      <p class="max-w-[60ch] text-base font-normal leading-relaxed text-ink">
         Layanan kesehatan mental di Bandung beserta biayanya.
       </p>
-      <p class="font-data text-xs font-normal tracking-normal text-redup">
-        {entri.length} layanan
-        {tanggalTerbaru &&
-          ` · diperbarui ${tanggalTerbaru.getDate()}/${tanggalTerbaru.getMonth() + 1}/${tanggalTerbaru.getFullYear()}`}
+      <p class="font-data text-xs font-normal tracking-normal text-muted">
+        {entries.length} layanan
+        {newestDate &&
+          ` · diperbarui ${newestDate.getDate()}/${newestDate.getMonth() + 1}/${newestDate.getFullYear()}`}
       </p>
     </div>
 
     <div class="flex flex-col gap-6 min-[900px]:flex-row min-[900px]:gap-8">
       <div class="min-[900px]:w-[200px] min-[900px]:shrink-0">
         <div class="min-[900px]:sticky min-[900px]:top-4">
-          <Filter client:load total={entri.length} />
+          <Filter client:load total={entries.length} />
         </div>
       </div>
 
-      <ul id="daftar-layanan" class="flex flex-1 list-none flex-col gap-[10px] p-0">
-        {entri.map((item) => (
-          <BarisEntri entry={item} />
+      <ul id="services-list" class="flex flex-1 list-none flex-col gap-[10px] p-0">
+        {entries.map((item) => (
+          <EntryRow entry={item} />
         ))}
       </ul>
     </div>

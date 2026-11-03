@@ -1,198 +1,198 @@
 import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 
-type Biaya = "semua" | "gratis" | "bawah-100" | "sesuai-kemampuan";
+type Cost = "all" | "free" | "under-100" | "income-based";
 
 interface FilterState {
-  biaya: Biaya;
-  jenis: string[];
-  cara: string[];
-  syarat: string[];
+  cost: Cost;
+  type: string[];
+  mode: string[];
+  terms: string[];
   q: string;
 }
 
-interface BarisData {
+interface RowData {
   el: HTMLLIElement;
-  nama: string;
-  kecamatan: string;
-  skema: string;
-  harga: number;
-  jenis: string;
+  name: string;
+  district: string;
+  pricing: string;
+  price: number;
+  type: string;
   online: boolean;
-  tatap: boolean;
-  tanpaRujukan: boolean;
-  tanpaJanji: boolean;
+  inPerson: boolean;
+  noReferral: boolean;
+  noAppointment: boolean;
 }
 
-const JENIS_OPSI = ["psikolog", "psikiater", "konseling", "komunitas", "hotline"];
-const LABEL_JENIS: Record<string, string> = {
-  psikolog: "Psikolog",
-  psikiater: "Psikiater",
-  konseling: "Konseling",
-  komunitas: "Komunitas",
+const TYPE_OPTIONS = ["psychologist", "psychiatrist", "counseling", "community", "hotline"];
+const TYPE_LABELS: Record<string, string> = {
+  psychologist: "Psikolog",
+  psychiatrist: "Psikiater",
+  counseling: "Konseling",
+  community: "Komunitas",
   hotline: "Hotline",
 };
 
-function bacaStateAwal(): FilterState {
-  const awal: FilterState = { biaya: "semua", jenis: [], cara: [], syarat: [], q: "" };
-  if (typeof window === "undefined") return awal;
+function readInitialState(): FilterState {
+  const initial: FilterState = { cost: "all", type: [], mode: [], terms: [], q: "" };
+  if (typeof window === "undefined") return initial;
   const params = new URLSearchParams(window.location.search);
-  const biaya = params.get("biaya");
-  if (biaya === "gratis" || biaya === "bawah-100" || biaya === "sesuai-kemampuan") {
-    awal.biaya = biaya;
+  const cost = params.get("cost");
+  if (cost === "free" || cost === "under-100" || cost === "income-based") {
+    initial.cost = cost;
   }
-  const daftar = (kunci: string) =>
-    (params.get(kunci) ?? "")
+  const list = (key: string) =>
+    (params.get(key) ?? "")
       .split(",")
       .map((s) => s.trim())
       .filter(Boolean);
-  awal.jenis = daftar("jenis").filter((v) => JENIS_OPSI.includes(v));
-  awal.cara = daftar("cara").filter((v) => v === "online" || v === "tatap-muka");
-  awal.syarat = daftar("syarat").filter((v) => v === "tanpa-rujukan" || v === "tanpa-janji");
-  awal.q = params.get("q") ?? "";
-  return awal;
+  initial.type = list("type").filter((v) => TYPE_OPTIONS.includes(v));
+  initial.mode = list("mode").filter((v) => v === "online" || v === "in-person");
+  initial.terms = list("terms").filter((v) => v === "no-referral" || v === "no-appointment");
+  initial.q = params.get("q") ?? "";
+  return initial;
 }
 
-function cocok(data: BarisData, state: FilterState): boolean {
-  if (state.biaya === "gratis") {
-    if (data.skema !== "gratis" && data.skema !== "bpjs") return false;
-  } else if (state.biaya === "bawah-100") {
-    if (!(data.harga > 0 && data.harga < 100000)) return false;
-  } else if (state.biaya === "sesuai-kemampuan") {
-    if (data.skema !== "sliding-scale") return false;
+function matches(data: RowData, state: FilterState): boolean {
+  if (state.cost === "free") {
+    if (data.pricing !== "free" && data.pricing !== "bpjs") return false;
+  } else if (state.cost === "under-100") {
+    if (!(data.price > 0 && data.price < 100000)) return false;
+  } else if (state.cost === "income-based") {
+    if (data.pricing !== "sliding-scale") return false;
   }
-  if (state.jenis.length > 0 && !state.jenis.includes(data.jenis)) return false;
-  if (state.cara.length > 0) {
-    const caraOk =
-      (state.cara.includes("online") && data.online) ||
-      (state.cara.includes("tatap-muka") && data.tatap);
-    if (!caraOk) return false;
+  if (state.type.length > 0 && !state.type.includes(data.type)) return false;
+  if (state.mode.length > 0) {
+    const modeOk =
+      (state.mode.includes("online") && data.online) ||
+      (state.mode.includes("in-person") && data.inPerson);
+    if (!modeOk) return false;
   }
-  if (state.syarat.length > 0) {
-    const semuaSyarat =
-      (!state.syarat.includes("tanpa-rujukan") || data.tanpaRujukan) &&
-      (!state.syarat.includes("tanpa-janji") || data.tanpaJanji);
-    if (!semuaSyarat) return false;
+  if (state.terms.length > 0) {
+    const termsOk =
+      (!state.terms.includes("no-referral") || data.noReferral) &&
+      (!state.terms.includes("no-appointment") || data.noAppointment);
+    if (!termsOk) return false;
   }
-  const kata = state.q.trim().toLowerCase();
-  if (kata && !data.nama.includes(kata) && !data.kecamatan.includes(kata)) return false;
+  const query = state.q.trim().toLowerCase();
+  if (query && !data.name.includes(query) && !data.district.includes(query)) return false;
   return true;
 }
 
 export default function Filter({ total }: { total: number }) {
-  const [state, setState] = useState<FilterState>(bacaStateAwal);
-  const [sheetTerbuka, setSheetTerbuka] = useState(false);
-  const [jumlah, setJumlah] = useState(total);
-  const barisRef = useRef<BarisData[]>([]);
-  const tombolFilterRef = useRef<HTMLButtonElement>(null);
+  const [state, setState] = useState<FilterState>(readInitialState);
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const [count, setCount] = useState(total);
+  const rowsRef = useRef<RowData[]>([]);
+  const filterButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    barisRef.current = Array.from(
+    rowsRef.current = Array.from(
       document.querySelectorAll<HTMLLIElement>("li[data-key]"),
     ).map((el) => ({
       el,
-      nama: el.dataset.nama ?? "",
-      kecamatan: el.dataset.kecamatan ?? "",
-      skema: el.dataset.skema ?? "",
-      harga: Number(el.dataset.harga ?? 0),
-      jenis: el.dataset.jenis ?? "",
+      name: el.dataset.name ?? "",
+      district: el.dataset.district ?? "",
+      pricing: el.dataset.pricing ?? "",
+      price: Number(el.dataset.price ?? 0),
+      type: el.dataset.type ?? "",
       online: el.dataset.online === "1",
-      tatap: el.dataset.tatap === "1",
-      tanpaRujukan: el.dataset.tanpaRujukan === "1",
-      tanpaJanji: el.dataset.tanpaJanji === "1",
+      inPerson: el.dataset.inPerson === "1",
+      noReferral: el.dataset.noReferral === "1",
+      noAppointment: el.dataset.noAppointment === "1",
     }));
   }, []);
 
   useEffect(() => {
     const params = new URLSearchParams();
-    if (state.biaya !== "semua") params.set("biaya", state.biaya);
-    if (state.jenis.length > 0) params.set("jenis", state.jenis.join(","));
-    if (state.cara.length > 0) params.set("cara", state.cara.join(","));
-    if (state.syarat.length > 0) params.set("syarat", state.syarat.join(","));
+    if (state.cost !== "all") params.set("cost", state.cost);
+    if (state.type.length > 0) params.set("type", state.type.join(","));
+    if (state.mode.length > 0) params.set("mode", state.mode.join(","));
+    if (state.terms.length > 0) params.set("terms", state.terms.join(","));
     if (state.q.trim()) params.set("q", state.q.trim());
     const query = params.toString();
     const url = query ? `${window.location.pathname}?${query}` : window.location.pathname;
     window.history.replaceState(null, "", url);
 
     let n = 0;
-    for (const baris of barisRef.current) {
-      const tampil = cocok(baris, state);
-      baris.el.hidden = !tampil;
-      if (tampil) n += 1;
+    for (const row of rowsRef.current) {
+      const visible = matches(row, state);
+      row.el.hidden = !visible;
+      if (visible) n += 1;
     }
-    setJumlah(n);
+    setCount(n);
   }, [state]);
 
   useEffect(() => {
-    if (!sheetTerbuka) return;
-    const tutup = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setSheetTerbuka(false);
+    if (!sheetOpen) return;
+    const close = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSheetOpen(false);
     };
-    document.addEventListener("keydown", tutup);
-    return () => document.removeEventListener("keydown", tutup);
-  }, [sheetTerbuka]);
+    document.addEventListener("keydown", close);
+    return () => document.removeEventListener("keydown", close);
+  }, [sheetOpen]);
 
   useEffect(() => {
-    if (!sheetTerbuka) tombolFilterRef.current?.focus();
-  }, [sheetTerbuka]);
+    if (!sheetOpen) filterButtonRef.current?.focus();
+  }, [sheetOpen]);
 
-  const jumlahAktif = useMemo(() => {
+  const activeCount = useMemo(() => {
     let n = 0;
-    if (state.biaya !== "semua") n += 1;
-    n += state.jenis.length + state.cara.length + state.syarat.length;
+    if (state.cost !== "all") n += 1;
+    n += state.type.length + state.mode.length + state.terms.length;
     if (state.q.trim()) n += 1;
     return n;
   }, [state]);
 
-  const aturUlang = () => setState({ biaya: "semua", jenis: [], cara: [], syarat: [], q: "" });
+  const reset = () => setState({ cost: "all", type: [], mode: [], terms: [], q: "" });
 
-  const alihArray = (kunci: "jenis" | "cara" | "syarat", nilai: string) =>
+  const toggleArray = (key: "type" | "mode" | "terms", value: string) =>
     setState((s) => ({
       ...s,
-      [kunci]: s[kunci].includes(nilai)
-        ? s[kunci].filter((v) => v !== nilai)
-        : [...s[kunci], nilai],
+      [key]: s[key].includes(value)
+        ? s[key].filter((v) => v !== value)
+        : [...s[key], value],
     }));
 
-  const kontrol = (
+  const controls = (
     <div class="space-y-5">
       <div>
         <label
-          for="cari-layanan"
-          class="mb-2 block text-sm font-normal text-tinta"
+          for="search-services"
+          class="mb-2 block text-sm font-normal text-ink"
         >
           Cari layanan
         </label>
         <input
-          id="cari-layanan"
+          id="search-services"
           type="search"
           value={state.q}
           onInput={(e) => setState((s) => ({ ...s, q: (e.target as HTMLInputElement).value }))}
           placeholder="Nama atau kecamatan"
-          class="min-h-[44px] w-full rounded-[8px] border border-garis bg-permukaan px-3 text-base font-normal text-tinta placeholder:text-redup focus:outline-2 focus:outline-aksen"
+          class="min-h-[44px] w-full rounded-[8px] border border-line bg-surface px-3 text-base font-normal text-ink placeholder:text-muted focus:outline-2 focus:outline-accent"
         />
       </div>
 
       <fieldset>
-        <legend class="mb-2 text-sm font-normal text-tinta">Biaya</legend>
+        <legend class="mb-2 text-sm font-normal text-ink">Biaya</legend>
         <div class="flex flex-col gap-1">
           {(
             [
-              ["semua", "Semua"],
-              ["gratis", "Gratis"],
-              ["bawah-100", "Di bawah 100rb"],
-              ["sesuai-kemampuan", "Sesuai kemampuan"],
-            ] as [Biaya, string][]
-          ).map(([nilai, label]) => (
+              ["all", "Semua"],
+              ["free", "Gratis"],
+              ["under-100", "Di bawah 100rb"],
+              ["income-based", "Sesuai kemampuan"],
+            ] as [Cost, string][]
+          ).map(([value, label]) => (
             <label
-              key={nilai}
-              class="inline-flex min-h-[44px] cursor-pointer items-center gap-3 text-base font-normal text-tinta"
+              key={value}
+              class="inline-flex min-h-[44px] cursor-pointer items-center gap-3 text-base font-normal text-ink"
             >
               <input
                 type="radio"
-                name="biaya"
-                value={nilai}
-                checked={state.biaya === nilai}
-                onChange={() => setState((s) => ({ ...s, biaya: nilai }))}
+                name="cost"
+                value={value}
+                checked={state.cost === value}
+                onChange={() => setState((s) => ({ ...s, cost: value }))}
                 class="h-5 w-5 accent-[#1F5148]"
               />
               {label}
@@ -202,42 +202,42 @@ export default function Filter({ total }: { total: number }) {
       </fieldset>
 
       <fieldset>
-        <legend class="mb-2 text-sm font-normal text-tinta">Jenis</legend>
+        <legend class="mb-2 text-sm font-normal text-ink">Jenis</legend>
         <div class="flex flex-col gap-1">
-          {JENIS_OPSI.map((nilai) => (
+          {TYPE_OPTIONS.map((value) => (
             <label
-              key={nilai}
-              class="inline-flex min-h-[44px] cursor-pointer items-center gap-3 text-base font-normal text-tinta"
+              key={value}
+              class="inline-flex min-h-[44px] cursor-pointer items-center gap-3 text-base font-normal text-ink"
             >
               <input
                 type="checkbox"
-                checked={state.jenis.includes(nilai)}
-                onChange={() => alihArray("jenis", nilai)}
+                checked={state.type.includes(value)}
+                onChange={() => toggleArray("type", value)}
                 class="h-5 w-5 accent-[#1F5148]"
               />
-              {LABEL_JENIS[nilai]}
+              {TYPE_LABELS[value]}
             </label>
           ))}
         </div>
       </fieldset>
 
       <fieldset>
-        <legend class="mb-2 text-sm font-normal text-tinta">Cara</legend>
+        <legend class="mb-2 text-sm font-normal text-ink">Cara</legend>
         <div class="flex flex-col gap-1">
           {(
             [
               ["online", "Online"],
-              ["tatap-muka", "Tatap muka"],
+              ["in-person", "Tatap muka"],
             ] as [string, string][]
-          ).map(([nilai, label]) => (
+          ).map(([value, label]) => (
             <label
-              key={nilai}
-              class="inline-flex min-h-[44px] cursor-pointer items-center gap-3 text-base font-normal text-tinta"
+              key={value}
+              class="inline-flex min-h-[44px] cursor-pointer items-center gap-3 text-base font-normal text-ink"
             >
               <input
                 type="checkbox"
-                checked={state.cara.includes(nilai)}
-                onChange={() => alihArray("cara", nilai)}
+                checked={state.mode.includes(value)}
+                onChange={() => toggleArray("mode", value)}
                 class="h-5 w-5 accent-[#1F5148]"
               />
               {label}
@@ -247,22 +247,22 @@ export default function Filter({ total }: { total: number }) {
       </fieldset>
 
       <fieldset>
-        <legend class="mb-2 text-sm font-normal text-tinta">Syarat</legend>
+        <legend class="mb-2 text-sm font-normal text-ink">Syarat</legend>
         <div class="flex flex-col gap-1">
           {(
             [
-              ["tanpa-rujukan", "Tanpa rujukan"],
-              ["tanpa-janji", "Tanpa janji temu"],
+              ["no-referral", "Tanpa rujukan"],
+              ["no-appointment", "Tanpa janji temu"],
             ] as [string, string][]
-          ).map(([nilai, label]) => (
+          ).map(([value, label]) => (
             <label
-              key={nilai}
-              class="inline-flex min-h-[44px] cursor-pointer items-center gap-3 text-base font-normal text-tinta"
+              key={value}
+              class="inline-flex min-h-[44px] cursor-pointer items-center gap-3 text-base font-normal text-ink"
             >
               <input
                 type="checkbox"
-                checked={state.syarat.includes(nilai)}
-                onChange={() => alihArray("syarat", nilai)}
+                checked={state.terms.includes(value)}
+                onChange={() => toggleArray("terms", value)}
                 class="h-5 w-5 accent-[#1F5148]"
               />
               {label}
@@ -271,11 +271,11 @@ export default function Filter({ total }: { total: number }) {
         </div>
       </fieldset>
 
-      {jumlahAktif > 0 && (
+      {activeCount > 0 && (
         <button
           type="button"
-          onClick={aturUlang}
-          class="inline-flex min-h-[44px] items-center text-sm font-normal text-aksen underline underline-offset-4"
+          onClick={reset}
+          class="inline-flex min-h-[44px] items-center text-sm font-normal text-accent underline underline-offset-4"
         >
           Atur ulang
         </button>
@@ -285,21 +285,21 @@ export default function Filter({ total }: { total: number }) {
 
   return (
     <div>
-      <p aria-live="polite" class="font-data text-xs font-normal text-redup">
-        {jumlah} dari {total} layanan
+      <p aria-live="polite" class="font-data text-xs font-normal text-muted">
+        {count} dari {total} layanan
       </p>
 
-      {jumlah === 0 && (
-        <div class="mt-4 space-y-2 rounded-[8px] border border-garis bg-permukaan p-[16px_18px]">
-          <p class="text-base font-normal text-tinta">
+      {count === 0 && (
+        <div class="mt-4 space-y-2 rounded-[8px] border border-line bg-surface p-[16px_18px]">
+          <p class="text-base font-normal text-ink">
             Tidak ada layanan yang cocok dengan filter ini.
           </p>
-          <p class="text-sm font-normal leading-relaxed text-redup">
+          <p class="text-sm font-normal leading-relaxed text-muted">
             Coba longgarkan filter biaya, atau{" "}
             <button
               type="button"
-              onClick={aturUlang}
-              class="inline-flex min-h-[44px] items-center text-aksen underline underline-offset-4"
+              onClick={reset}
+              class="inline-flex min-h-[44px] items-center text-accent underline underline-offset-4"
             >
               lihat semua {total} layanan
             </button>
@@ -309,47 +309,47 @@ export default function Filter({ total }: { total: number }) {
       )}
 
       <aside aria-label="Filter layanan" class="mt-4 hidden min-[900px]:block">
-        {kontrol}
+        {controls}
       </aside>
 
       <div class="mt-4 min-[900px]:hidden">
         <button
-          ref={tombolFilterRef}
+          ref={filterButtonRef}
           type="button"
-          onClick={() => setSheetTerbuka(true)}
+          onClick={() => setSheetOpen(true)}
           aria-haspopup="dialog"
-          class="inline-flex min-h-[44px] items-center gap-2 rounded-[8px] border border-garis bg-permukaan px-4 text-sm font-normal text-tinta"
+          class="inline-flex min-h-[44px] items-center gap-2 rounded-[8px] border border-line bg-surface px-4 text-sm font-normal text-ink"
         >
-          Filter{jumlahAktif > 0 ? ` (${jumlahAktif})` : ""}
+          Filter{activeCount > 0 ? ` (${activeCount})` : ""}
         </button>
       </div>
 
-      {sheetTerbuka && (
+      {sheetOpen && (
         <div
           role="dialog"
           aria-modal="true"
           aria-label="Filter layanan"
-          class="fixed inset-x-0 bottom-0 z-50 max-h-[85vh] overflow-y-auto rounded-t-[12px] border-t border-garis bg-permukaan px-5 pb-8 pt-4 min-[900px]:hidden"
+          class="fixed inset-x-0 bottom-0 z-50 max-h-[85vh] overflow-y-auto rounded-t-[12px] border-t border-line bg-surface px-5 pb-8 pt-4 min-[900px]:hidden"
         >
           <div class="mb-4 flex items-center justify-between">
-            <p class="font-display text-[17px] font-medium text-tinta">
-              Filter{jumlahAktif > 0 ? ` (${jumlahAktif})` : ""}
+            <p class="font-display text-[17px] font-medium text-ink">
+              Filter{activeCount > 0 ? ` (${activeCount})` : ""}
             </p>
             <button
               type="button"
-              onClick={() => setSheetTerbuka(false)}
-              class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-[8px] border border-garis text-sm font-normal text-tinta"
+              onClick={() => setSheetOpen(false)}
+              class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-[8px] border border-line text-sm font-normal text-ink"
             >
               Tutup
             </button>
           </div>
-          {kontrol}
+          {controls}
           <button
             type="button"
-            onClick={() => setSheetTerbuka(false)}
-            class="mt-6 inline-flex min-h-[44px] w-full items-center justify-center rounded-[8px] bg-aksen px-4 text-base font-medium text-permukaan"
+            onClick={() => setSheetOpen(false)}
+            class="mt-6 inline-flex min-h-[44px] w-full items-center justify-center rounded-[8px] bg-accent px-4 text-base font-medium text-surface"
           >
-            Lihat {jumlah} layanan
+            Lihat {count} layanan
           </button>
         </div>
       )}

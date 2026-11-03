@@ -1,0 +1,214 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import VerificationStamp from "../../components/VerificationStamp.astro";
+import { formatPrice } from "../../lib/price";
+import {
+  phoneLink,
+  whatsappLink,
+  displaySite,
+  mapLink,
+  visitInfo,
+  shortDescription,
+  reportLink,
+} from "../../lib/contact";
+
+export const getStaticPaths = (async () => {
+  const allEntries = await getCollection("services");
+  return allEntries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  entry: CollectionEntry<"services">;
+}
+
+const { entry } = Astro.props;
+const data = entry.data;
+
+const typeLabels: Record<string, string> = {
+  psychologist: "Psikolog",
+  psychiatrist: "Psikiater",
+  counseling: "Konseling",
+  community: "Komunitas",
+  hotline: "Hotline",
+};
+
+const typeName = typeLabels[data.type] ?? data.type;
+const location = [data.city, data.district].filter(Boolean).join(", ");
+const subheading = [typeName, location].filter(Boolean).join(" · ");
+const price = formatPrice(data);
+
+const pageTitle = `${data.name} — biaya dan cara mendaftar`;
+
+const pricingLabels: Record<string, string> = {
+  free: "Gratis",
+  bpjs: "Ditanggung BPJS",
+  "sliding-scale": "Sliding scale",
+  "fixed-rate": "Tarif tetap",
+};
+
+const visitSentences = visitInfo(
+  data.online,
+  data.in_person,
+  data.needs_referral,
+  data.needs_appointment,
+);
+
+const hasContact = Boolean(data.phone ?? data.whatsapp ?? data.website ?? data.instagram);
+const sectionHeading =
+  "font-data text-[11px] font-normal uppercase tracking-[0.08em] text-muted";
+---
+
+<Base title={pageTitle} description={shortDescription(data.name, typeName, data.city, price)}>
+  <div class="space-y-6">
+    <a
+      id="back"
+      href="/"
+      class="inline-flex min-h-[44px] items-center gap-2 text-sm font-normal text-accent no-underline hover:underline hover:underline-offset-4"
+    >
+      <span aria-hidden="true">←</span> Kembali ke daftar
+    </a>
+
+    <div class="space-y-2">
+      <h1 class="font-display text-[32px] font-medium leading-tight text-ink">
+        {data.name}
+      </h1>
+      {subheading && (
+        <p class="text-sm font-normal leading-relaxed text-muted">{subheading}</p>
+      )}
+    </div>
+
+    <section aria-labelledby="section-cost" class="space-y-2">
+      <h2 id="section-cost" class={sectionHeading}>Biaya</h2>
+      <p class="text-base font-normal leading-relaxed text-ink">
+        {price} · {pricingLabels[data.pricing] ?? data.pricing}
+      </p>
+    </section>
+
+    <section aria-labelledby="section-visit" class="space-y-2">
+      <h2 id="section-visit" class={sectionHeading}>Cara datang</h2>
+      {visitSentences.map((sentence) => (
+        <p class="text-base font-normal leading-relaxed text-ink">{sentence}</p>
+      ))}
+      {data.hours && (
+        <p class="text-base font-normal leading-relaxed text-ink">{data.hours}</p>
+      )}
+    </section>
+
+    {data.status === "closed" && (
+      <div class="rounded-[8px] border border-line bg-free-bg p-[16px_18px]">
+        <p class="text-base font-normal leading-relaxed text-ink">
+          Layanan ini tercatat sudah tutup. Informasinya tetap ditampilkan
+          supaya yang mencari nama ini tahu keadaannya.
+        </p>
+      </div>
+    )}
+
+    {hasContact && (
+      <section aria-labelledby="section-contact" class="space-y-2">
+        <h2 id="section-contact" class={sectionHeading}>Kontak</h2>
+        <dl class="space-y-2 text-base font-normal text-ink">
+          {data.phone && (
+            <div class="flex gap-4">
+              <dt class="w-20 shrink-0 text-sm font-normal text-muted">Telepon</dt>
+              <dd>
+                <a href={phoneLink(data.phone)} class="text-accent underline underline-offset-4">
+                  {data.phone}
+                </a>
+              </dd>
+            </div>
+          )}
+          {data.whatsapp && (
+            <div class="flex gap-4">
+              <dt class="w-20 shrink-0 text-sm font-normal text-muted">WhatsApp</dt>
+              <dd>
+                <a href={whatsappLink(data.whatsapp)} class="text-accent underline underline-offset-4">
+                  {data.whatsapp}
+                </a>
+              </dd>
+            </div>
+          )}
+          {data.website && (
+            <div class="flex gap-4">
+              <dt class="w-20 shrink-0 text-sm font-normal text-muted">Situs</dt>
+              <dd>
+                <a
+                  href={data.website}
+                  rel="noopener"
+                  class="break-all text-accent underline underline-offset-4"
+                >
+                  {displaySite(data.website)}
+                </a>
+              </dd>
+            </div>
+          )}
+          {data.instagram && (
+            <div class="flex gap-4">
+              <dt class="w-20 shrink-0 text-sm font-normal text-muted">Instagram</dt>
+              <dd class="text-ink">@{data.instagram}</dd>
+            </div>
+          )}
+        </dl>
+      </section>
+    )}
+
+    {data.address && (
+      <section aria-labelledby="section-address" class="space-y-2">
+        <h2 id="section-address" class={sectionHeading}>Alamat</h2>
+        <p class="text-base font-normal leading-relaxed text-ink">{data.address}</p>
+        <p>
+          <a
+            href={mapLink(data.address, data.city)}
+            rel="noopener"
+            class="inline-flex min-h-[44px] items-center text-sm font-normal text-accent underline underline-offset-4"
+          >
+            Buka di peta
+          </a>
+        </p>
+      </section>
+    )}
+
+    {data.notes && (
+      <section aria-labelledby="section-notes" class="space-y-2">
+        <h2 id="section-notes" class={sectionHeading}>Catatan</h2>
+        <p class="text-base font-normal leading-relaxed text-ink">{data.notes}</p>
+      </section>
+    )}
+
+    <footer class="space-y-3">
+      <VerificationStamp lastVerified={data.last_verified} />
+      <p class="font-data text-[11px] font-normal tracking-[0.03em] text-muted">
+        Sumber: {data.source}
+      </p>
+      <p>
+        <a
+          href={reportLink(data.name, entry.id)}
+          class="inline-flex min-h-[44px] items-center gap-1 text-sm font-normal text-accent underline underline-offset-4"
+        >
+          Ada yang tidak sesuai? Beri tahu kami <span aria-hidden="true">→</span>
+        </a>
+      </p>
+    </footer>
+  </div>
+</Base>
+
+<script>
+  const back = document.getElementById("back");
+  if (back instanceof HTMLAnchorElement) {
+    back.addEventListener("click", (e) => {
+      try {
+        const referrer = new URL(document.referrer);
+        if (referrer.origin === window.location.origin) {
+          e.preventDefault();
+          window.history.back();
+        }
+      } catch {
+        // referrer kosong atau tidak valid — biarkan tautan ke / bekerja
+      }
+    });
+  }
+</script>

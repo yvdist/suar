@@ -1,0 +1,17 @@
+{
+  "name": "Hotline Contoh 24 Jam",
+  "type": "hotline",
+  "city": "Nasional",
+  "phone": "0800-000-0003",
+  "price_min": 0,
+  "pricing": "free",
+  "online": true,
+  "in_person": false,
+  "needs_referral": false,
+  "needs_appointment": false,
+  "hours": "24 jam setiap hari",
+  "notes": "Entri contoh fiktif untuk pengembangan, bukan layanan nyata.",
+  "last_verified": "2026-01-15",
+  "verified_by": "suar-team",
+  "source": "Data contoh internal untuk pengembangan"
+}

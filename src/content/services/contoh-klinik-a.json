@@ -1,0 +1,21 @@
+{
+  "name": "Contoh Klinik A",
+  "type": "counseling",
+  "city": "Bandung",
+  "district": "Contoh",
+  "address": "Jalan Contoh No. 1 (alamat fiktif untuk pengembangan)",
+  "phone": "0800-000-0001",
+  "website": "https://contoh-klinik-a.example.id",
+  "price_min": 50000,
+  "price_max": 150000,
+  "pricing": "sliding-scale",
+  "online": true,
+  "in_person": true,
+  "needs_referral": false,
+  "needs_appointment": true,
+  "hours": "Senin–Jumat 09.00–17.00",
+  "notes": "Entri contoh fiktif untuk pengembangan, bukan layanan nyata.",
+  "last_verified": "2026-10-01",
+  "verified_by": "suar-team",
+  "source": "Data contoh internal untuk pengembangan"
+}
