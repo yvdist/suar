@@ -45,6 +45,8 @@
   --color-stale: #8A4B3A;
   --color-free-bg: #F0E9D4;
   --color-accent-bg: #E3EAE7;
+  --color-shade: #FFFBF0;
+  --color-surface: #FFFFFF;
 
   --font-display: "Bricolage Grotesque Variable", system-ui, sans-serif;
   --font-body: "Public Sans Variable", system-ui, sans-serif;

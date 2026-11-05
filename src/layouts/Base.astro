@@ -37,63 +37,92 @@ const pageTitle = title ? `${title} \u2014 suar` : "suar";
     <link rel="canonical" href={`https://suar.web.id${canonical}`} />
     <title>{pageTitle}</title>
   </head>
-  <body class="bg-shade text-ink font-body antialiased">
+  <body class="bg-paper text-ink font-body antialiased">
     <a
       href="#main"
-      class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:inline-flex focus:min-h-[44px] focus:min-w-[44px] focus:items-center focus:bg-accent focus:px-4 focus:py-3 focus:text-surface focus:text-sm focus:font-medium focus:outline-none focus:ring-2 focus:ring-ink focus:ring-offset-2"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:inline-flex focus:min-h-[44px] focus:min-w-[44px] focus:items-center focus:bg-accent focus:px-4 focus:py-3 focus:text-paper focus:text-sm focus:font-medium focus:outline-none focus:ring-2 focus:ring-ink focus:ring-offset-2"
     >
       Lewati ke konten utama
     </a>
 
-    <header class="border-b border-line bg-shade">
-      <div class="max-w-[720px] px-5 py-4">
+    <header class="border-b border-line bg-paper">
+      <div class="mx-auto flex max-w-[1120px] items-center justify-between gap-4 px-5 py-4 md:px-6">
         <a
           href="/"
-          class="font-display text-[20px] font-medium tracking-tight text-ink no-underline"
+          class="font-display text-[20px] font-semibold tracking-tight text-ink no-underline"
         >
           suar
         </a>
+        <nav aria-label="Navigasi utama" class="flex flex-wrap items-center gap-x-5 gap-y-1">
+          <a
+            href="/layanan"
+            class="inline-flex min-h-[44px] items-center text-sm font-normal text-muted underline decoration-line underline-offset-4 hover:text-ink hover:decoration-ink"
+          >
+            Daftar layanan
+          </a>
+          <a
+            href="/about"
+            class="inline-flex min-h-[44px] items-center text-sm font-normal text-muted underline decoration-line underline-offset-4 hover:text-ink hover:decoration-ink"
+          >
+            Tentang
+          </a>
+          <a
+            href="/limitations"
+            class="inline-flex min-h-[44px] items-center text-sm font-normal text-muted underline decoration-line underline-offset-4 hover:text-ink hover:decoration-ink"
+          >
+            Batasan
+          </a>
+          <a
+            href="/privacy"
+            class="inline-flex min-h-[44px] items-center text-sm font-normal text-muted underline decoration-line underline-offset-4 hover:text-ink hover:decoration-ink"
+          >
+            Privasi
+          </a>
+        </nav>
       </div>
     </header>
 
     <main
       id="main"
       tabindex="-1"
-      class="max-w-[720px] px-5 py-8 focus:outline-none"
+      class="mx-auto max-w-[1120px] px-5 py-8 focus:outline-none md:px-6 md:py-10"
     >
       <slot />
     </main>
 
     <EmergencyStrip />
 
-    <footer class="border-t border-line bg-shade">
-      <div
-        class="max-w-[720px] flex flex-wrap gap-x-6 gap-y-2 px-5 py-6 text-sm"
-      >
-        <a
-          href="/about"
-          class="inline-flex min-h-[44px] items-center text-muted underline decoration-line underline-offset-4 hover:text-ink hover:decoration-ink"
-        >
-          Tentang
-        </a>
-        <a
-          href="/limitations"
-          class="inline-flex min-h-[44px] items-center text-muted underline decoration-line underline-offset-4 hover:text-ink hover:decoration-ink"
-        >
-          Batasan layanan
-        </a>
-        <a
-          href="/privacy"
-          class="inline-flex min-h-[44px] items-center text-muted underline decoration-line underline-offset-4 hover:text-ink hover:decoration-ink"
-        >
-          Privasi
-        </a>
-        <a
-          href="/report"
-          class="inline-flex min-h-[44px] items-center text-muted underline decoration-line underline-offset-4 hover:text-ink hover:decoration-ink"
-        >
-          Lapor perubahan
-        </a>
+    <footer class="border-t border-line bg-paper">
+      <div class="mx-auto max-w-[1120px] px-5 py-6 md:px-6">
+        <nav aria-label="Tautan footer" class="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+          <a
+            href="/about"
+            class="inline-flex min-h-[44px] items-center text-muted underline decoration-line underline-offset-4 hover:text-ink hover:decoration-ink"
+          >
+            Tentang
+          </a>
+          <a
+            href="/limitations"
+            class="inline-flex min-h-[44px] items-center text-muted underline decoration-line underline-offset-4 hover:text-ink hover:decoration-ink"
+          >
+            Batasan layanan
+          </a>
+          <a
+            href="/privacy"
+            class="inline-flex min-h-[44px] items-center text-muted underline decoration-line underline-offset-4 hover:text-ink hover:decoration-ink"
+          >
+            Privasi
+          </a>
+          <a
+            href="/report"
+            class="inline-flex min-h-[44px] items-center text-muted underline decoration-line underline-offset-4 hover:text-ink hover:decoration-ink"
+          >
+            Lapor perubahan
+          </a>
+        </nav>
+        <p class="mt-4 max-w-[60ch] text-sm leading-relaxed text-muted">
+          Suar adalah direktori informasi, bukan layanan kesehatan, bukan penyedia terapi, dan bukan layanan darurat.
+        </p>
       </div>
     </footer>
   </body>
