@@ -33,17 +33,20 @@
 }
 
 @theme {
-  --color-shade: #EFF2EF;
-  --color-surface: #FFFFFF;
-  --color-ink: #1C2420;
-  --color-muted: #5F6B64;
-  --color-accent: #1F5148;
+  --color-paper: #FFFBF0;
+  --color-ink: #1A1E1D;
+  --color-muted: #6B6560;
+  --color-accent: #9E3B1F;
+  --color-accent-hover: #7D2F18;
+  --color-line: #E8E0D0;
+  --color-emergency: #FCEDE3;
+  --color-emergency-line: #E9D9CB;
   --color-free: #8C6A16;
   --color-stale: #8A4B3A;
-
-  --color-line: #DDE3E0;
   --color-free-bg: #F0E9D4;
   --color-accent-bg: #E3EAE7;
+  --color-shade: #FFFBF0;
+  --color-surface: #FFFFFF;
 
   --font-display: "Bricolage Grotesque Variable", system-ui, sans-serif;
   --font-body: "Public Sans Variable", system-ui, sans-serif;

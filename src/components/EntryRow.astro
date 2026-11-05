@@ -60,10 +60,11 @@ const badges = allBadges.slice(0, 3);
   data-in-person={data.in_person ? "1" : ""}
   data-no-referral={!data.needs_referral ? "1" : ""}
   data-no-appointment={!data.needs_appointment ? "1" : ""}
+  class="border-b border-line"
 >
   <a
     href={`/services/${entry.id}`}
-    class="block rounded-[8px] bg-surface p-[16px_18px] no-underline transition-colors hover:bg-shade focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+    class="block py-4 no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
   >
     <div class="flex items-baseline justify-between gap-4">
       <h2 class="font-display text-[17px] font-medium tracking-[-0.01em] text-ink">

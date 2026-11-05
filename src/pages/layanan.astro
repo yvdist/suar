@@ -1,0 +1,59 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import EntryRow from "../components/EntryRow.astro";
+import Filter from "../components/Filter";
+
+const allEntries = await getCollection("services");
+const entries = [...allEntries].sort((a, b) => a.data.price_min - b.data.price_min);
+
+const newestDate = entries.reduce<Date | null>((newest, item) => {
+  const t = item.data.last_verified;
+  return !newest || t > newest ? t : newest;
+}, null);
+---
+
+<Base
+  title="Daftar layanan"
+  description="Layanan kesehatan mental terjangkau di Bandung beserta biayanya."
+  canonical="/layanan"
+>
+  <head>
+    <meta property="og:title" content="suar — direktori layanan kesehatan mental terjangkau" />
+    <meta property="og:description" content="Psikolog, konseling, dan layanan kesehatan mental terjangkau di Bandung beserta biayanya." />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:url" content="https://suar.web.id/layanan" />
+  </head>
+  <div class="space-y-6">
+    <div class="space-y-3">
+      <p class="font-data text-[11px] tracking-[0.12em] uppercase text-muted">Direktori · Bandung</p>
+      <h1 class="font-display text-[32px] font-medium leading-tight text-ink">
+        Daftar layanan
+      </h1>
+      <p class="max-w-[60ch] text-base font-normal leading-relaxed text-ink">
+        Psikolog, konseling, dan layanan kesehatan mental terjangkau di Bandung
+        beserta biayanya. Lihat harga, cara datang, dan kontak tiap layanan.
+      </p>
+      <p class="font-data text-xs font-normal tracking-normal text-muted">
+        {entries.length} layanan
+        {newestDate &&
+          ` · diperbarui ${newestDate.getDate()}/${newestDate.getMonth() + 1}/${newestDate.getFullYear()}`}
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-6 min-[900px]:flex-row min-[900px]:gap-8">
+      <div class="min-[900px]:w-[200px] min-[900px]:shrink-0">
+        <div class="min-[900px]:sticky min-[900px]:top-4">
+          <Filter client:load total={entries.length} />
+        </div>
+      </div>
+
+      <ul id="services-list" class="flex flex-1 list-none flex-col p-0">
+        {entries.map((item) => (
+          <EntryRow entry={item} />
+        ))}
+      </ul>
+    </div>
+  </div>
+</Base>
