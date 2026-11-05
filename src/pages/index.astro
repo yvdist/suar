@@ -1,57 +1,170 @@
 ---
-import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
-import EntryRow from "../components/EntryRow.astro";
-import Filter from "../components/Filter";
-
-const allEntries = await getCollection("services");
-const entries = [...allEntries].sort((a, b) => a.data.price_min - b.data.price_min);
-
-const newestDate = entries.reduce<Date | null>((newest, item) => {
-  const t = item.data.last_verified;
-  return !newest || t > newest ? t : newest;
-}, null);
+import ArchIllustration from "../components/ArchIllustration.astro";
 ---
 
 <Base
-  title="Daftar layanan"
-  description="Layanan kesehatan mental terjangkau di Bandung beserta biayanya."
+  title="Tempat yang tenang untuk mencari layanan kesehatan mental yang terjangkau"
+  description="Psikolog, konseling, psikiater, komunitas, dan hotline di Bandung. Setiap layanan dicatat dengan biaya, cara datang, dan tanggal terakhir dicek."
 >
   <head>
-    <meta property="og:title" content="suar — direktori layanan kesehatan mental terjangkau" />
-    <meta property="og:description" content="Psikolog, konseling, dan layanan kesehatan mental terjangkau di Bandung beserta biayanya." />
+    <meta property="og:title" content="suar — tempat yang tenang untuk mencari layanan kesehatan mental yang terjangkau" />
+    <meta property="og:description" content="Psikolog, konseling, psikiater, komunitas, dan hotline di Bandung beserta biayanya." />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="id_ID" />
     <meta property="og:url" content="https://suar.web.id/" />
   </head>
-  <div class="space-y-6">
-    <div class="space-y-3">
-      <h1 class="font-display text-[32px] font-medium leading-tight text-ink">
-        Daftar layanan
-      </h1>
-      <p class="max-w-[60ch] text-base font-normal leading-relaxed text-ink">
-        Psikolog, konseling, dan layanan kesehatan mental terjangkau di Bandung
-        beserta biayanya. Lihat harga, cara datang, dan kontak tiap layanan.
-      </p>
-      <p class="font-data text-xs font-normal tracking-normal text-muted">
-        {entries.length} layanan
-        {newestDate &&
-          ` · diperbarui ${newestDate.getDate()}/${newestDate.getMonth() + 1}/${newestDate.getFullYear()}`}
-      </p>
-    </div>
 
-    <div class="flex flex-col gap-6 min-[900px]:flex-row min-[900px]:gap-8">
-      <div class="min-[900px]:w-[200px] min-[900px]:shrink-0">
-        <div class="min-[900px]:sticky min-[900px]:top-4">
-          <Filter client:load total={entries.length} />
-        </div>
+  <!-- Hero -->
+  <section class="grid gap-8 pb-10 md:grid-cols-[1.05fr_0.95fr] md:items-center md:gap-10">
+    <div class="space-y-5">
+      <p class="font-data text-[11px] tracking-[0.12em] uppercase text-muted">Direktori · Bandung · Diperbarui 1 Oktober 2026</p>
+      <h1 class="font-display text-[32px] font-bold leading-[0.95] tracking-[-0.02em] text-ink md:text-[46px]">
+        Tempat yang tenang untuk mencari layanan kesehatan mental yang terjangkau.
+      </h1>
+      <p class="max-w-[44ch] text-[15px] leading-relaxed text-muted">
+        Psikolog, konseling, psikiater, komunitas, dan hotline di Bandung. Setiap layanan dicatat dengan biaya, cara datang, dan tanggal terakhir dicek.
+      </p>
+      <div class="flex flex-wrap items-center gap-3 pt-1">
+        <a
+          href="/layanan"
+          class="inline-flex min-h-[44px] items-center rounded-[8px] bg-accent px-5 text-sm font-medium text-white no-underline hover:bg-accent-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+        >
+          Lihat daftar layanan
+        </a>
+        <a
+          href="/limitations"
+          class="inline-flex min-h-[44px] items-center text-sm font-normal text-ink underline decoration-line underline-offset-4 hover:text-accent hover:decoration-accent"
+        >
+          Baca batasan suar
+        </a>
+      </div>
+    </div>
+    <div class="mx-auto w-full max-w-[420px] md:mx-0 md:ml-auto">
+      <ArchIllustration />
+    </div>
+  </section>
+
+  <div class="border-t border-line"></div>
+
+  <!-- 02 · Pilih jalan -->
+  <section class="grid gap-6 py-10 md:grid-cols-[160px_1fr] md:gap-8">
+    <p class="font-data text-[11px] tracking-[0.12em] uppercase text-muted">02 · Pilih jalan</p>
+    <div class="space-y-6">
+      <div class="space-y-2">
+        <h2 class="font-display text-[24px] font-semibold leading-tight tracking-[-0.015em] text-ink md:text-[28px]">
+          Mulai dari yang paling dekat dengan kebutuhanmu.
+        </h2>
+        <p class="max-w-[52ch] text-sm leading-relaxed text-muted">
+          Belum tahu mana yang cocok? Tiap jalan dijelaskan singkat, dan kamu selalu bisa melihat semua layanan sekaligus.
+        </p>
       </div>
 
-      <ul id="services-list" class="flex flex-1 list-none flex-col gap-[10px] p-0">
-        {entries.map((item) => (
-          <EntryRow entry={item} />
-        ))}
-      </ul>
+      <div class="border-t border-line">
+        {
+          [
+            { label: "Psikolog", desc: "Ingin bicara dengan tenaga yang terlatih secara psikologis?", href: "/layanan?type=psychologist", icon: "person" },
+            { label: "Psikiater", desc: "Perlu pemeriksaan medis, atau mungkin resep dari dokter?", href: "/layanan?type=psychiatrist", icon: "leaf" },
+            { label: "Konseling", desc: "Ingin sesi bicara yang terstruktur bersama konselor?", href: "/layanan?type=counseling", icon: "rings" },
+            { label: "Komunitas", desc: "Lebih nyaman berbagi bersama orang yang mengalami hal serupa?", href: "/layanan?type=community", icon: "people" },
+            { label: "Hotline", desc: "Ingin langsung menelepon atau menulis kepada seseorang?", href: "/layanan?type=hotline", icon: "phone" },
+          ].map((item) => (
+            <a href={item.href} class="flex items-center justify-between gap-4 border-b border-line py-4 no-underline hover:bg-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+              <span class="flex items-center gap-4">
+                <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center text-ink" aria-hidden="true">
+                  {item.icon === "person" && (
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="3.5" /><path d="M8 18c0-2.2 1.8-4 4-4s4 1.8 4 4" /><path d="M8 20h8" stroke-width="0.9" /></svg>
+                  )}
+                  {item.icon === "leaf" && (
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 20c0-4 0-7 4-9 1-0.5 2-1.5 2-3 0 2-1.5 3-3 3.5" /><path d="M12 20c0-3-2-5-5-6" /><path d="M7 14c-1-1-1-2.5 0-3.5 1 1 1.8 2 0 3.5Z" /><path d="M12 12v8" /></svg>
+                  )}
+                  {item.icon === "rings" && (
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="9" cy="12" r="5" /><circle cx="15" cy="12" r="5" /></svg>
+                  )}
+                  {item.icon === "people" && (
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="8" cy="10" r="2.5" /><circle cx="16" cy="10" r="2.5" /><path d="M4 17c0-1.5 1.5-3 4-3s4 1.5 4 3" /><path d="M12 17c0-1.5 1.5-3 4-3s4 1.5 4 3" /><path d="M4 20h16" stroke-width="0.9" /></svg>
+                  )}
+                  {item.icon === "phone" && (
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M6 4l3 3-2 2c1.5 3 4 5.5 7 7l2-2 3 3-2 2c-1 1-3 1-4 0-3-2-5.5-4.5-7.5-7.5-1-1-1-3 0-4L6 4Z" /></svg>
+                  )}
+                </span>
+                <span class="space-y-0.5">
+                  <span class="block font-display text-[17px] font-semibold text-ink">{item.label}</span>
+                  <span class="block max-w-[44ch] text-sm leading-relaxed text-muted">{item.desc}</span>
+                </span>
+              </span>
+              <span class="hidden shrink-0 items-center gap-1 font-data text-[11px] tracking-[0.08em] uppercase text-muted md:inline-flex">
+                Lihat layanan <span aria-hidden="true">→</span>
+              </span>
+              <span class="shrink-0 font-data text-[11px] tracking-[0.08em] uppercase text-muted md:hidden" aria-hidden="true">→</span>
+            </a>
+          ))
+        }
+      </div>
+      <p>
+        <a href="/layanan" class="inline-flex min-h-[44px] items-center text-sm font-medium text-ink underline decoration-line underline-offset-4 hover:text-accent hover:decoration-accent">
+          Atau lihat semua layanan →
+        </a>
+      </p>
     </div>
-  </div>
+  </section>
+
+  <!-- 03 · Emergency card -->
+  <section class="grid gap-6 py-8 md:grid-cols-[160px_1fr] md:gap-8">
+    <p class="font-data hidden text-[11px] tracking-[0.12em] uppercase text-muted md:block">03 · Bantuan sekarang</p>
+    <div class="rounded-[8px] border border-emergency-line bg-emergency px-5 py-5 md:flex md:items-center md:justify-between md:gap-6 md:px-6">
+      <div class="flex gap-4">
+        <span class="hidden h-10 w-10 shrink-0 items-center justify-center text-accent md:inline-flex" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M10 20h4" /><path d="M9 20l1-10h4l1 10" /><path d="M8 10h8" /><path d="M10 7h4" /><path d="M12 4v3" /><path d="M7 7l-2-1" /><path d="M17 7l2-1" /><path d="M7 10l-2 0" /><path d="M17 10l2 0" /></svg>
+        </span>
+        <div class="space-y-1">
+          <h2 class="font-display text-[17px] font-semibold leading-tight text-ink">Kalau kamu butuh bantuan sekarang</h2>
+          <p class="max-w-[52ch] text-sm leading-relaxed text-muted">
+            Layanan darurat kesehatan jiwa, 24 jam setiap hari. Kalau situasinya mendesak, hubungi 119 atau IGD rumah sakit terdekat.
+          </p>
+        </div>
+      </div>
+      <div class="mt-4 flex gap-6 md:mt-0 md:flex-col md:items-end md:gap-1">
+        <a href="tel:119" class="font-display text-[28px] font-bold leading-none tracking-tight text-accent no-underline hover:text-accent-hover"
+          >119 <span class="align-middle font-data text-[11px] font-medium tracking-[0.12em] uppercase">ext. 8</span></a
+        >
+        <a href="tel:112" class="font-display text-[18px] font-bold leading-none tracking-tight text-accent no-underline hover:text-accent-hover">112</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="border-t border-line"></div>
+
+  <!-- 04 · Mengapa suar berbeda -->
+  <section class="grid gap-6 py-10 md:grid-cols-[160px_1fr] md:gap-8">
+    <p class="font-data text-[11px] tracking-[0.12em] uppercase text-muted">04 · Mengapa suar berbeda</p>
+    <div class="space-y-8">
+      <h2 class="max-w-[28ch] font-display text-[22px] font-medium leading-snug tracking-[-0.015em] text-ink md:text-[26px]">
+        Suar tidak menilai mana yang lebih baik. Yang dicatat hanya apa yang ada, berapa biayanya, dan kapan terakhir diperiksa.
+      </h2>
+      <div class="grid gap-6 border-t border-line pt-6 md:grid-cols-3 md:gap-6">
+        <div class="space-y-2 border-t border-line pt-4 md:border-t-0 md:pt-0">
+          <span class="inline-flex h-7 w-7 items-center justify-center text-ink" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="10" width="12" height="10" rx="1.5" /><path d="M9 10V8a3 3 0 0 1 6 0v2" /><circle cx="12" cy="15" r="1.2" /></svg>
+          </span>
+          <h3 class="font-display text-[15px] font-semibold text-ink">Tanpa akun</h3>
+          <p class="text-sm leading-relaxed text-muted">Tidak ada yang perlu didaftarkan. Kamu bisa membaca dan pergi.</p>
+        </div>
+        <div class="space-y-2 border-t border-line pt-4 md:border-t-0 md:pt-0">
+          <span class="inline-flex h-7 w-7 items-center justify-center text-ink" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="7" /><path d="M3 12c2-3 5-5 9-6" /><path d="M4 5l16 14" /></svg>
+          </span>
+          <h3 class="font-display text-[15px] font-semibold text-ink">Tanpa pelacakan</h3>
+          <p class="text-sm leading-relaxed text-muted">Tidak ada analitik dan tidak ada data pengunjung yang disimpan.</p>
+        </div>
+        <div class="space-y-2 border-t border-line pt-4 md:border-t-0 md:pt-0">
+          <span class="inline-flex h-7 w-7 items-center justify-center text-ink" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="7" /><path d="M12 8v8" /><path d="M9 10h6" /><path d="M9 14h6" /></svg>
+          </span>
+          <h3 class="font-display text-[15px] font-semibold text-ink">Tanpa biaya tersembunyi</h3>
+          <p class="text-sm leading-relaxed text-muted">Biaya ditulis di setiap entri. Suar tidak menerima bayaran untuk pencantuman.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 </Base>

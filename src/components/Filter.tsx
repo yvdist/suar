@@ -216,7 +216,7 @@ export default function Filter({ total }: { total: number }) {
                 value={value}
                 checked={state.cost === value}
                 onChange={() => setState((s) => ({ ...s, cost: value }))}
-                class="h-5 w-5 accent-[#1F5148]"
+                class="h-5 w-5 accent-accent"
               />
               {label}
             </label>
@@ -236,7 +236,7 @@ export default function Filter({ total }: { total: number }) {
                 type="checkbox"
                 checked={state.type.includes(value)}
                 onChange={() => toggleArray("type", value)}
-                class="h-5 w-5 accent-[#1F5148]"
+                class="h-5 w-5 accent-accent"
               />
               {TYPE_LABELS[value]}
             </label>
@@ -261,7 +261,7 @@ export default function Filter({ total }: { total: number }) {
                 type="checkbox"
                 checked={state.mode.includes(value)}
                 onChange={() => toggleArray("mode", value)}
-                class="h-5 w-5 accent-[#1F5148]"
+                class="h-5 w-5 accent-accent"
               />
               {label}
             </label>
@@ -286,7 +286,7 @@ export default function Filter({ total }: { total: number }) {
                 type="checkbox"
                 checked={state.terms.includes(value)}
                 onChange={() => toggleArray("terms", value)}
-                class="h-5 w-5 accent-[#1F5148]"
+                class="h-5 w-5 accent-accent"
               />
               {label}
             </label>
